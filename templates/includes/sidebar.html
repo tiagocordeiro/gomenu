@@ -29,8 +29,8 @@
       </a>
       <div class="collapse" id="produtos">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="#">Todos os produtos</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Adicionar produto</a>
+          <li class="nav-item"><a class="nav-link" href="{% url 'products_list' %}">Todos os produtos</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'product_new' %}">Adicionar produto</a>
           </li>
         </ul>
       </div>
@@ -57,8 +57,8 @@
       </a>
       <div class="collapse" id="variacoes">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="#">Todas as variações</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Adicionar variação</a>
+          <li class="nav-item"><a class="nav-link" href="{% url 'variations_list' %}">Todas as variações</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'variation_new' %}">Adicionar variação</a>
           </li>
         </ul>
       </div>
