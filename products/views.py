@@ -46,7 +46,8 @@ def products_list(request):
 
     simple_products = products.filter(productvariation__isnull=True)
 
-    variation_products = ProductVariation.objects.all().filter(product__restaurant__manager=request.user)
+    variation_products = ProductVariation.objects.all().filter(
+        product__restaurant__manager=request.user)
 
     context = {
         'simple_products': simple_products,
@@ -76,7 +77,11 @@ def product_new(request):
             restaurant__manager=request.user)
 
         formset = variations_formset(request.POST, instance=product_form,
-                                     prefix='product', queryset=restaurnt_variations)
+                                     prefix='product')
+
+        for formulario in formset:
+            formulario.fields['variation'].queryset = Variation.objects.filter(
+                restaurant__manager=request.user)
 
         if form.is_valid() and formset.is_valid():
             novo_produto = form.save(commit=False)
@@ -91,7 +96,11 @@ def product_new(request):
         form = ProductForm(instance=product_form, prefix='main')
         form.fields["category"].queryset = Category.objects.filter(
             restaurant__manager=request.user)
-        formset = variations_formset(instance=product_form, prefix='product', queryset=restaurnt_variations)
+        formset = variations_formset(instance=product_form, prefix='product')
+
+        for formulario in formset:
+            formulario.fields['variation'].queryset = Variation.objects.filter(
+                restaurant__manager=request.user)
 
     return render(request, 'products/product_new.html', {'form': form,
                                                          'formset': formset})
