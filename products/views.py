@@ -80,8 +80,7 @@ def product_new(request):
                                      prefix='product')
 
         for formulario in formset:
-            formulario.fields['variation'].queryset = Variation.objects.filter(
-                restaurant__manager=request.user)
+            formulario.fields['variation'].queryset = restaurnt_variations
 
         if form.is_valid() and formset.is_valid():
             novo_produto = form.save(commit=False)
@@ -99,8 +98,7 @@ def product_new(request):
         formset = variations_formset(instance=product_form, prefix='product')
 
         for formulario in formset:
-            formulario.fields['variation'].queryset = Variation.objects.filter(
-                restaurant__manager=request.user)
+            formulario.fields['variation'].queryset = restaurnt_variations
 
     return render(request, 'products/product_new.html', {'form': form,
                                                          'formset': formset})
