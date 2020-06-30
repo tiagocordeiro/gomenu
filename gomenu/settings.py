@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'restaurants',
     'menus',
     'products',
+
+    # QRcode
+    'qr_code',
 ]
 
 MIDDLEWARE = [

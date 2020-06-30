@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 
 from core.models import Active, TimeStampedModel
+from products.models import Category
 from restaurants.models import Restaurant
 
 
@@ -19,3 +20,16 @@ class Menu(TimeStampedModel, Active):
 
     def __str__(self):
         return str(self.name)
+
+
+class MenuCategory(TimeStampedModel, Active):
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    order = models.PositiveIntegerField('ordem')
+
+    def __str__(self):
+        return str(self.category.name + ' - ' + self.menu.name)
+
+    class Meta:
+        ordering = ('order',)
+        unique_together = [("menu", "category")]
