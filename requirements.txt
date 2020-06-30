@@ -8,3 +8,6 @@ gunicorn==20.0.4
 
 # Imagens
 Pillow==7.2.0
+
+# QRcodes
+django-qr-code==1.2.0
