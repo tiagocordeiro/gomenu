@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+{#{% load humanize %}#}
+
+{% block title %}Meu Perfil{% endblock %}
+{% block page-title %}Meu Perfil{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+  <li class="breadcrumb-item active"><span>Perfil</span></li>
+{% endblock %}
+
+{% block content %}
+  <!-- Main Content Start -->
+  <section class="main--content">
+    <!-- Panel Start -->
+    <div class="panel profile-cover">
+      <div class="profile-cover__img">
+        {% if usuario.avatar.url is None %}
+          <img src="{% static 'assets/img/avatars/01_150x150.png' %}" alt="" class="rounded-circle">
+        {% else %}
+          <img src="{{ usuario.avatar.url }}" alt="" class="rounded-circle" style="object-fit: cover; height: 120px;">
+        {% endif %}
+        {% if user.first_name %}
+          <h3 class="h3">{{ user.first_name|safe }}</h3>
+        {% else %}
+          <h3 class="h3">{{ user.username|safe }}</h3>
+        {% endif %}
+      </div>
+
+      <div class="profile-cover__action" data-bg-img="{% static 'images/background1.jpg' %}" data-overlay="0.3">
+        {#      <div class="profile-cover__action" data-bg-img="{% static 'assets/img/covers/01_800x150.jpg' %}" data-overlay="0.3">#}
+
+        <button class="btn btn-rounded btn-info">
+          <i class="fa fa-comment"></i>
+          <span>Mensagens</span>
+        </button>
+      </div>
+
+      <div class="profile-cover__info">
+        <ul class="nav">
+          <li><strong>0</strong>Pedidos</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Panel End -->
+
+
+    <div class="panel">
+      <div class="panel-heading">
+        <h3 class="panel-title">Perfil</h3>
+      </div>
+
+      <div class="panel-content">
+        {% if form.errors %}
+          {{ form.errors }}
+        {% endif %}
+        <div class="form-group">
+          <form action="." method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <span class="label-text">{{ form.first_name.label_tag }}</span>
+                {{ form.first_name }}
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <span class="label-text">{{ form.last_name.label_tag }}</span>
+                {{ form.last_name }}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <span class="label-text">{{ form.email.label_tag }}</span>
+                {{ form.email }}
+              </div>
+              <div id="avatar-col" class="col-md-6 col-sm-12">
+                {{ formset.management_form }}
+                {{ formset.as_p }}
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <button class="btn btn-rounded btn-success" type="submit">Atualizar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
