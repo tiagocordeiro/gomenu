@@ -1,2 +1,4 @@
 django-extensions==3.0.1
 ipython==7.16.1
+
+-r requirements.txt
