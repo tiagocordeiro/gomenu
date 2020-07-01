@@ -32,7 +32,7 @@ def new_menu(request):
     menu_form = Menu()
     categories_menu_formset = inlineformset_factory(
         Menu, MenuCategory,
-        form=MenuCategoriesForm, extra=1
+        form=MenuCategoriesForm, extra=10, max_num=10
     )
     if request.method == 'POST':
         form = MenuForm(request.POST, instance=menu_form, prefix='main')
@@ -63,6 +63,8 @@ def new_menu(request):
         for formulario in formset:
             formulario.fields['category'].queryset = Category.objects.filter(
                 restaurant__manager=request.user)
+
+    # TODO: Aplicar queryset no formset antes.
 
     context = {'form': form, 'formset': formset}
     return render(request, 'menus/new.html', context=context)
