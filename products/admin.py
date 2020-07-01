@@ -9,15 +9,15 @@ class ProductVariationInLine(admin.StackedInline):
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'restaurant')
 
 
 class VariationAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'restaurant')
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'category', 'restaurant')
     inlines = [
         ProductVariationInLine,
     ]

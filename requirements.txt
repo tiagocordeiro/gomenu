@@ -14,3 +14,6 @@ django-qr-code==1.2.0
 
 # WP API
 wordpress-api==1.2.9
+
+# AWS Storage
+django-s3-folder-storage==0.5
