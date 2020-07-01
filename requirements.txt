@@ -11,3 +11,6 @@ Pillow==7.2.0
 
 # QRcodes
 django-qr-code==1.2.0
+
+# WP API
+wordpress-api==1.2.9
