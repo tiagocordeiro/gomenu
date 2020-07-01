@@ -1,12 +1,14 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
+from products.facade import get_product, get_from_category
 from products.forms import CategoryForm, ProductVariationForm, ProductForm, \
     VariationForm
 from products.models import Category, Product, ProductVariation, Variation
-from restaurants.models import Restaurant
+from restaurants.models import Restaurant, RestaurantIntegrations
 
 
 @login_required
@@ -134,3 +136,33 @@ def variation_new(request):
         form = VariationForm()
 
     return render(request, 'products/variation_new.html', {'form': form})
+
+
+@login_required
+def import_from_woocommerce(request, product_id):
+    product = get_product(product_id=product_id)
+    return JsonResponse(product.json())
+
+
+@login_required
+def import_all_from_woocommerce_category(request, category_id):
+    try:
+        restaurant = Restaurant.objects.get(manager=request.user)
+    except Restaurant.DoesNotExist:
+        messages.warning(request, "Você precisa cadastrar um restaurante")
+        return redirect('new_restaurant')
+
+    try:
+        woo_integration_data = restaurant.restaurantintegrations_set
+        consumer_key = woo_integration_data.get().wc_consumer_key
+        consumer_secret = woo_integration_data.get().wc_consumer_secret
+        woo_commerce_url = woo_integration_data.get().woo_commerce_url
+    except RestaurantIntegrations.DoesNotExist:
+        messages.warning(request, "Solicite a integração para o suporte")
+        return redirect('dashboard')
+
+    products = get_from_category(category_id, restaurant=restaurant,
+                                 consumer_key=consumer_key,
+                                 consumer_secret=consumer_secret,
+                                 woo_commerce_url=woo_commerce_url)
+    return JsonResponse(products)

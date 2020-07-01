@@ -11,3 +11,10 @@ class Restaurant(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+
+class RestaurantIntegrations(models.Model):
+    restaurat = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    wc_consumer_key = models.CharField(max_length=50)
+    wc_consumer_secret = models.CharField(max_length=50)
+    woo_commerce_url = models.URLField()
