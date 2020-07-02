@@ -77,6 +77,9 @@ def menu_display(request, slug, pk):
     context = {
         'menu_title': menu['title'],
         'menu': menu['itens'],
+        'restaurant_pk': menu['restaurant_pk'],
+        'menu_pk': pk,
+        'online_sales': menu['online_sale'],
     }
 
     return render(request, 'menus/food-menu.html', context=context)
@@ -146,6 +149,7 @@ def menu_print(request, pk):
     context = {
         'menu_title': menu['title'],
         'menu': menu['itens'],
+        'restaurant_pk': menu['restaurant_pk'],
     }
 
     return render(request, 'menus/food-menu-print.html', context=context)
@@ -157,6 +161,7 @@ def menu_json(request, pk):
     context = {
         'menu_title': menu['title'],
         'menu': menu['itens'],
+        'restaurant_pk': menu['restaurant_pk'],
     }
 
     return JsonResponse(context)

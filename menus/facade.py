@@ -19,12 +19,14 @@ def menu_builder(pk):
         for product in Product.objects.filter(category=category.category):
             if product.description:
                 menu_itens[category_count]["itens"].append(
-                    {"product": {"name": product.name,
+                    {"product": {"pk": product.pk,
+                                 "name": product.name,
                                  "description": product.description,
                                  "price": product.price}})
             else:
                 menu_itens[category_count]["itens"].append(
-                    {"product": {"name": product.name,
+                    {"product": {"pk": product.pk,
+                                 "name": product.name,
                                  "price": product.price}})
 
             variations = ProductVariation.objects.filter(product=product)
@@ -44,4 +46,7 @@ def menu_builder(pk):
             product_count += 1
         category_count += 1
 
-    return {'title': menu.name, 'itens': menu_itens}
+    return {'title': menu.name,
+            'itens': menu_itens,
+            'restaurant_pk': menu.restaurant.pk,
+            'online_sale': menu.restaurant.online_sales, }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+{{ order }}
+
+{{ order.customer }}
+{{ order.restaurant }}
+{{ order.slug }}
+{{ order.status }}
+{{ order.notes }}
+
+<table>
+{% for item in order_items %}
+  <tr>
+    <td>{{ item.item.name }}</td>
+    <td>{{ item.item.price }}</td>
+  </tr>
+{% endfor %}
+</table>
+<p>R$ {{ order_total }}</p>
+</body>
+</html>
