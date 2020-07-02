@@ -26,16 +26,22 @@ def order_add_item(request, pk, restaurant_pk, menu_pk, **kwargs):
 
     order = Order.objects.get(slug=order_slug)
     if order.orderitem_set.all().filter(item=product).exists():
+
+        item = OrderItem.objects.get(order=order, item=product)
+        item.quantity = item.quantity + 1
+        item.save()
         messages.info(request,
                       f'{product.name} Já está no pedido. '
                       f'<a href="/orders/cart/{order_slug}/" class="alert-link">Ver pedido</a>.')
+
         return redirect(reverse('menu_display', kwargs={'pk': menu.pk,
                                                         'slug': menu.slug}))
 
-    item = OrderItem(order=order, item=product, unity_price=product.price)
-    item.save()
+    else:
+        item = OrderItem(order=order, item=product, unity_price=product.price)
+        item.save()
 
-    messages.success(request, "Produto adicionado")
+    messages.success(request, f"{item.item.name} adicionado ao pedido")
     return redirect(reverse('menu_display', kwargs={'pk': menu.pk,
                                                     'slug': menu.slug}))
 

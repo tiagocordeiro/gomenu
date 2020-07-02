@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load core_extras %}
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -18,9 +19,12 @@
   <tr>
     <td>{{ item.item.name }}</td>
     <td>{{ item.item.price }}</td>
+    <td>{{ item.quantity }}</td>
+    <td>{{ item.item.price|subtotal:item.quantity }}</td>
   </tr>
 {% endfor %}
 </table>
 <p>R$ {{ order_total }}</p>
+<p><button>Fechar Pedido</button></p>
 </body>
 </html>
