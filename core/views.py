@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.forms import inlineformset_factory
 from django.shortcuts import render, redirect
 
-from core.forms import ProfileForm
+from core.forms import ProfileForm, SignUpForm
 from core.models import UserProfile
 
 
@@ -41,3 +41,19 @@ def profile(request):
     context = {'form': form, 'formset': formset, }
 
     return render(request, 'profile.html', context)
+
+
+def sign_up(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            user = User.objects.get(username=username)
+            group = Group.objects.get_or_create(name="Restaurant Manager")
+            user.groups.add(group)
+            return redirect('dashboard')
+    else:
+        form = SignUpForm()
+    return render(request, 'registration/signup.html',
+                  {'form': form})
