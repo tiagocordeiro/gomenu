@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'restaurants',
     'menus',
     'products',
+    'orders',
 
     # QRcode
     'qr_code',

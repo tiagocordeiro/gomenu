@@ -47,6 +47,22 @@
 <body>
 
 <section class="container flex flex-wrap">
+
+  <div class="row">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="col-12">
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message|safe }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
   {% for category in menu %}
     <div class="menu-category">
       <div class="d-flex justify-content-center mt-5">
@@ -71,7 +87,13 @@
               {% endfor %}
             {% else %}
               <div class='col'>
-                <h5><span class="badge badge-warning my-4 p-3">R$ {{ item.product.price }}</span></h5>
+                {% if online_sales == True %}
+                  <h5>
+                    <a href="{% url 'order_add_item' pk=item.product.pk restaurant_pk=restaurant_pk menu_pk=menu_pk %}"><span class="badge badge-warning my-4 p-3">R$ {{ item.product.price }}</span></a>
+                  </h5>
+                {% else %}
+                  <h5><span class="badge badge-warning my-4 p-3">R$ {{ item.product.price }}</span></h5>
+                {% endif %}
               </div>
             {% endif %}
 
@@ -82,6 +104,6 @@
     </div>
   {% endfor %}
 </section>
-
+<script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
 </body>
 </html>
