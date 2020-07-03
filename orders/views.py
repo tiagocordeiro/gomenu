@@ -1,8 +1,10 @@
 from django.contrib import messages
+from django.forms import inlineformset_factory
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from menus.models import Menu
+from orders.forms import OrderItemsForm, OrderForm
 from orders.models import Order, OrderItem
 from products.models import Product
 from restaurants.models import Restaurant
@@ -54,6 +56,30 @@ def cart(request, slug):
         subtotal = item.quantity * item.unity_price
         order_total = order_total + subtotal
 
+    order_items_formset = inlineformset_factory(
+        Order, OrderItem, form=OrderItemsForm, extra=0, can_delete=True)
+
+    if request.method == "POST":
+        form = OrderForm(request.POST, instance=order, prefix='main')
+        formset = order_items_formset(request.POST, instance=order,
+                                      prefix='product')
+
+        try:
+            if form.is_valid() and formset.is_valid():
+                form.save()
+                formset.save()
+                messages.success(request, "Pedido atualizado")
+                return redirect(reverse('cart', kwargs={'slug': slug}))
+        except Exception as e:
+            messages.warning(request,
+                             'Ocorreu um erro ao atualizar: {}'.format(e))
+
+    else:
+        form = OrderForm(instance=order, prefix='main')
+        formset = order_items_formset(instance=order, prefix='product')
+
     return render(request, 'orders/cart.html', {'order': order,
                                                 'order_items': order_items,
-                                                'order_total': order_total, })
+                                                'order_total': order_total,
+                                                'form': form,
+                                                'formset': formset, })

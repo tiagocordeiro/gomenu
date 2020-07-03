@@ -1,3 +1,5 @@
+import locale
+
 from django import template
 
 register = template.Library()
@@ -11,3 +13,10 @@ def has_group(user, group_name):
 @register.filter(name='subtotal')
 def subtotal(unity_price, quantity):
     return unity_price * quantity
+
+
+@register.filter(name='currency_display')
+def currency_display(value):
+    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+    value = locale.currency(value, grouping=True, symbol=None)
+    return value

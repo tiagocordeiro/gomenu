@@ -1,30 +1,108 @@
 <!DOCTYPE html>
+{% load static %}
 {% load core_extras %}
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+  <style>
+    .table td {
+      vertical-align: middle;
+    }
+  </style>
 </head>
 <body>
-{{ order }}
+<div class="container flex flex-wrap">
+  <div class="row">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="col-12">
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message|safe }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <div class="row">
+    <div class="col-12">
 
-{{ order.customer }}
-{{ order.restaurant }}
-{{ order.slug }}
-{{ order.status }}
-{{ order.notes }}
+      <form action="." method="POST">
+        {% csrf_token %}
 
-<table>
-{% for item in order_items %}
-  <tr>
-    <td>{{ item.item.name }}</td>
-    <td>{{ item.item.price }}</td>
-    <td>{{ item.quantity }}</td>
-    <td>{{ item.item.price|subtotal:item.quantity }}</td>
-  </tr>
-{% endfor %}
-</table>
-<p>R$ {{ order_total }}</p>
-<p><button>Fechar Pedido</button></p>
+        {{ formset.management_form }}
+        <table class="table table-responsive">
+          <thead>
+          <tr>
+            <th style="width: 40%;">Produto</th>
+            <th style="text-align: center; width: 10%;">Quantidade</th>
+            <th style="text-align: right; width: 20%;">Valor Un.</th>
+            <th style="text-align: right; width: 20%;">Valor Total</th>
+            <th style="text-align: center; width: 10%;">Remover</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for order_item in formset %}
+            <tr>
+              {{ order_item.id }}{{ order_item.item }}
+              {% if order_item.instance.atacado == True %}
+                <td>{{ order_item.instance.item }} <span class="label label-blue">Atacado</span></td>
+                <td style="text-align: center;">{{ order_item.instance.quantity }}
+                  <div style="display: none">{{ order_item.quantity }}</div>
+                </td>
+              {% else %}
+                <td>{{ order_item.instance.item }}</td>
+                <td style="text-align: center;">{{ order_item.quantity }}</td>
+              {% endif %}
+              <td style="text-align: right;">{{ order_item.instance.unity_price|currency_display }}</td>
+              <td style="text-align: right;">{{ order_item.instance.unity_price|subtotal:order_item.instance.quantity|currency_display }}</td>
+              <td style="text-align: center;">{{ order_item.DELETE }}</td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <td style="text-align: left;" colspan="5">
+              <p><strong>Observações:</strong></p>
+              {{ form.notes }}
+            </td>
+          </tr>
+          <tr style="vertical-align: center">
+            <td colspan="3"><strong>Total</strong></td>
+            <td style="text-align: right;"><strong>R$ {{ order_total }}</strong></td>
+            <td style="text-align: center;">
+              <button class="btn btn-rounded btn-primary m-3" value="Atualizar"><i class="fa fa-floppy-o"></i> Atualizar
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+  </div>
+  {#No pedido / cart ddeve haver uma forma de voltar para o cardápio ou lista de cardápios do restaurante / negócio.#}
+  {#O pedido pode conter itens de diferentes cardápios, desde que seja do mesmo restaurante.#}
+
+
+  <div style="display: flex; justify-content: space-between;" class="row">
+    <div class="col">
+      <a class="btn btn-rounded btn-secondary m-3" href="{{ order.restaurant.menu_set.all.first.get_url }}">Voltar</a>
+      <p>Menus do Restaurante: {{ order.restaurant.menu_set.all|length }}</p>
+      <p>Primeiro: {{ order.restaurant.menu_set.all.first }}</p>
+    </div>
+    <div class="col">
+      <a class="btn btn-rounded btn-success m-3 float-right" href="#">Checkout 💳</a>
+    </div>
+  </div>
+
+
+</div>
+<script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
 </body>
 </html>
