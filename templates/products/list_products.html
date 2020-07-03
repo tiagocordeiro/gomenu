@@ -64,7 +64,7 @@
                 <td> {{ product.category }} </td>
                 <td> R$ {{ product.price }}</td>
                 <td style="text-align: right;">
-                  <a class="btn btn-gradient-primary btn-sm" href="#" class="label"><i class="mdi mdi-lead-pencil"></i></a>
+                  <a class="btn btn-gradient-primary btn-sm" href="{% url 'product_update' pk=product.pk %}" class="label"><i class="mdi mdi-lead-pencil"></i></a>
                   <a class="btn btn-gradient-primary btn-sm" href="#" class="label"><i class="mdi mdi-eraser"></i></a>
                 </td>
               </tr>
@@ -106,7 +106,7 @@
                   {% endfor %}
                 </td>
                 <td style="text-align: right;">
-                  <a class="btn btn-gradient-primary btn-sm" href="#" class="label"><i class="mdi mdi-lead-pencil"></i></a>
+                  <a class="btn btn-gradient-primary btn-sm" href="{% url 'product_update' pk=variacao.grouper.pk %}" class="label"><i class="mdi mdi-lead-pencil"></i></a>
                   <a class="btn btn-gradient-primary btn-sm" href="#" class="label"><i class="mdi mdi-eraser"></i></a>
                 </td>
               </tr>
