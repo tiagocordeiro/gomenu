@@ -51,13 +51,10 @@
                   <p class="m-0">{{ menu.description }}</p>
                 </td>
                 <td class="text-right">
-                  <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-primary">
-                      <a class="text-light" target="_blank" href="{% url 'menu_display' slug=menu.slug pk=menu.pk %}"><i class="mdi mdi-link-variant"></i></a>
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                      <a class="text-light" href="{% url 'qr_gen' pk=menu.pk %}" class="label"><i class="mdi mdi-qrcode"></i></a>
-                    </button>
+                  <div class="btn-group" role="group" aria-label="Menu options">
+                    <a class="btn btn-primary text-light" href="{% url 'update_menu' pk=menu.pk %}" class="label"><i class="mdi mdi-lead-pencil "></i></a>
+                    <a class="btn btn-primary text-light" target="_blank" href="{% url 'menu_display' slug=menu.slug pk=menu.pk %}"><i class="mdi mdi-link-variant"></i></a>
+                    <a class="btn btn-primary text-light" href="{% url 'qr_gen' pk=menu.pk %}" class="label"><i class="mdi mdi-qrcode"></i></a>
                   </div>
                   <div class="btn-group">
                     <button type="button" class="btn btn-info btn-icon-text dropdown-toggle" data-toggle="dropdown">

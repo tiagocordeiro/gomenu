@@ -16,7 +16,10 @@ from restaurants.models import Restaurant
 
 @login_required
 def menu_list(request):
-    menus = Menu.objects.filter(restaurant__manager=request.user)
+    if request.user.is_superuser:
+        menus = Menu.objects.all()
+    else:
+        menus = Menu.objects.filter(restaurant__manager=request.user)
 
     return render(request, 'menus/list.html', context={'menus': menus})
 
@@ -68,6 +71,53 @@ def new_menu(request):
 
     context = {'form': form, 'formset': formset}
     return render(request, 'menus/new.html', context=context)
+
+
+@login_required
+def update_menu(request, pk):
+    menu = get_object_or_404(Menu, pk=pk)
+    if request.user.is_superuser or request.user == menu.restaurant.manager:
+        pass
+    else:
+        messages.warning(request, "Você não tem permissão.")
+        return redirect('dashboard')
+
+    menu_categories_formset = inlineformset_factory(Menu, MenuCategory,
+                                                    form=MenuCategoriesForm,
+                                                    extra=10, max_num=10,
+                                                    can_delete=True)
+
+    if request.method == 'POST':
+        form = MenuForm(request.POST, instance=menu, prefix='main')
+        formset = menu_categories_formset(request.POST, instance=menu,
+                                          prefix='product')
+
+        # TODO: Aplicar queryset no formset antes.
+        for formulario in formset:
+            formulario.fields['category'].queryset = Category.objects.filter(
+                restaurant__manager=request.user)
+
+        try:
+            if form.is_valid() and formset.is_valid():
+                form.save()
+                formset.save()
+                messages.success(request, "Cardápio atualizado.")
+                return redirect('update_menu', pk=pk)
+        except Exception as e:
+            messages.warning(request,
+                             'Ocorreu um erro ao atualizar: {}'.format(e))
+
+    else:
+        form = MenuForm(instance=menu, prefix='main')
+        formset = menu_categories_formset(instance=menu, prefix='product')
+
+        # TODO: Aplicar queryset no formset antes.
+        for formulario in formset:
+            formulario.fields['category'].queryset = Category.objects.filter(
+                restaurant__manager=request.user)
+
+    return render(request, 'menus/update.html', {'form': form,
+                                                 'formset': formset})
 
 
 def menu_display(request, slug, pk):
