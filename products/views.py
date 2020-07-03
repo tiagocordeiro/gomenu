@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from products.facade import get_product, get_from_category
 from products.forms import CategoryForm, ProductVariationForm, ProductForm, \
@@ -69,7 +69,7 @@ def product_new(request):
     product_form = Product()
     variations_formset = inlineformset_factory(Product, ProductVariation,
                                                form=ProductVariationForm,
-                                               extra=1)
+                                               extra=3, max_num=3)
 
     restaurnt_variations = Variation.objects.filter(restaurant=restaurant)
 
@@ -104,6 +104,53 @@ def product_new(request):
 
     return render(request, 'products/product_new.html', {'form': form,
                                                          'formset': formset})
+
+
+@login_required
+def product_update(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    restaurant = Restaurant.objects.get(manager=request.user)
+    restaurnt_variations = Variation.objects.filter(restaurant=restaurant)
+
+    if request.user.is_superuser or request.user == product.restaurant.manager:
+        pass
+    else:
+        messages.warning(request, "Você não tem permissão.")
+        return redirect('dashboard')
+
+    variations_formset = inlineformset_factory(Product, ProductVariation,
+                                               form=ProductVariationForm,
+                                               extra=3, max_num=3)
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product, prefix='main')
+        formset = variations_formset(request.POST, instance=product,
+                                     prefix='product')
+
+        # TODO: Aplicar queryset no formset antes.
+        for formulario in formset:
+            formulario.fields['variation'].queryset = restaurnt_variations
+
+        try:
+            if form.is_valid() and formset.is_valid():
+                form.save()
+                formset.save()
+                messages.success(request, "Produto atualizado")
+                return redirect('product_update', pk=pk)
+        except Exception as e:
+            messages.warning(request,
+                             'Ocorreu um erro ao atualizar: {}'.format(e))
+
+    else:
+        form = ProductForm(instance=product, prefix='main')
+        formset = variations_formset(instance=product, prefix='product')
+
+        # TODO: Aplicar queryset no formset antes.
+        for formulario in formset:
+            formulario.fields['variation'].queryset = restaurnt_variations
+
+    return render(request, 'products/product_update.html', {'form': form,
+                                                            'formset': formset, })
 
 
 @login_required
