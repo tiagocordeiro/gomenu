@@ -97,6 +97,7 @@
             {{ formset.management_form }}
             <div class="content" id="categorias">
               {% for category in formset %}
+                {{ category.id }}
                 <div id="item-{{ forloop.counter0 }}" class="row form-row spacer">
                   <div class="input-group">
                     <div class="col-md-9">
@@ -112,6 +113,7 @@
             </div>
             <div class="row my-5">
               <div class="col-md-12" style="display: flex; justify-content: space-between;">
+                <a class="btn btn-warning" href="{% url 'menu_list' %}">Cancelar</a>
 {#                <button type="button" id="add-item" class="btn btn-primary">#}
 {#                  <i class="fa fa-plus"></i> Add Categoria#}
 {#                </button>#}

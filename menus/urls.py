@@ -10,4 +10,5 @@ urlpatterns = [
     path('qrcode/<pk>/', views.menu_qrcode_gen, name='qr_gen'),
     path('view/<pk>/<slug>/', views.menu_display, name='menu_display'),
     path('qrcode/sheet/<pk>/<size>/', views.qr_sheet_gen, name='qr_sheet_gen'),
+    path('update/<pk>/', views.update_menu, name='update_menu'),
 ]
