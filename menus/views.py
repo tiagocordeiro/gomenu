@@ -123,6 +123,15 @@ def update_menu(request, pk):
 def menu_display(request, slug, pk):
     menu_object = get_object_or_404(Menu, slug=slug, pk=pk)
     menu = menu_builder(pk=menu_object.pk)
+    restaurant = menu_object.restaurant
+    menu_url = reverse('menu_display', kwargs={'slug': slug, 'pk': pk})
+    menu_complete_url = ''.join(
+        ['https://', get_current_site(request).domain, menu_url])
+
+    if restaurant.image:
+        menu_image = restaurant.image.url
+    else:
+        menu_image = False
 
     context = {
         'menu_title': menu['title'],
@@ -130,6 +139,10 @@ def menu_display(request, slug, pk):
         'restaurant_pk': menu['restaurant_pk'],
         'menu_pk': pk,
         'online_sales': menu['online_sale'],
+        'menu_object': menu_object,
+        'menu_complete_url': menu_complete_url,
+        'restaurant': restaurant,
+        'menu_image': menu_image,
     }
 
     return render(request, 'menus/food-menu.html', context=context)
