@@ -60,7 +60,9 @@
             <tbody>
             {% for product in simple_products %}
               <tr>
-                <td> {{ product.name }} </td>
+                <td>
+                  <p>{{ product.name }}<br>{{ product.description }}</p>
+                </td>
                 <td> {{ product.category }} </td>
                 <td> R$ {{ product.price }}</td>
                 <td style="text-align: right;">
