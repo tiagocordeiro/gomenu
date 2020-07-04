@@ -52,15 +52,12 @@
           {% for order_item in formset %}
             <tr>
               {{ order_item.id }}{{ order_item.item }}
-              {% if order_item.instance.atacado == True %}
-                <td>{{ order_item.instance.item }} <span class="label label-blue">Atacado</span></td>
-                <td style="text-align: center;">{{ order_item.instance.quantity }}
-                  <div style="display: none">{{ order_item.quantity }}</div>
-                </td>
+              {% if order_item.instance.variation %}
+                <td>{{ order_item.instance.item }} <br> {{ order_item.instance.variation }}</td>
               {% else %}
                 <td>{{ order_item.instance.item }}</td>
-                <td style="text-align: center;">{{ order_item.quantity }}</td>
               {% endif %}
+              <td style="text-align: center;">{{ order_item.quantity }}</td>
               <td style="text-align: right;">{{ order_item.instance.unity_price|currency_display }}</td>
               <td style="text-align: right;">{{ order_item.instance.unity_price|subtotal:order_item.instance.quantity|currency_display }}</td>
               <td style="text-align: center;">{{ order_item.DELETE }}</td>
