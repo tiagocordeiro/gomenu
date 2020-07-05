@@ -40,6 +40,7 @@
             <thead>
             <tr>
               <th>Cardápio</th>
+              {% if request.user.is_superuser %}<th>Restaurante</th>{% endif %}
               <th class="text-center">Ações</th>
             </tr>
             </thead>
@@ -50,6 +51,7 @@
                   <h6>{{ menu.name }}</h6>
                   <p class="m-0">{{ menu.description }}</p>
                 </td>
+                {% if request.user.is_superuser %}<th>{{ menu.restaurant }}</th>{% endif %}
                 <td class="text-right">
                   <div class="btn-group" role="group" aria-label="Menu options">
                     <a class="btn btn-primary text-light" href="{% url 'update_menu' pk=menu.pk %}" class="label"><i class="mdi mdi-lead-pencil "></i></a>
