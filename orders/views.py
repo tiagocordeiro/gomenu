@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -151,3 +152,32 @@ def checkout(request, slug):
         'order_items_total': order_items_total,
     }
     return render(request, 'orders/simple_checkout.html', context=context)
+
+
+@login_required
+def orders_list(request):
+    if request.user.is_superuser:
+        orders = Order.objects.all()
+    else:
+        orders = Order.objects.all().filter(restaurant__manager=request.user)
+
+    return render(request, 'orders/list.html', {'orders': orders})
+
+
+def order_detail(request, slug):
+    order = Order.objects.get(slug=slug)
+    order_items = OrderItem.objects.filter(order=order)
+    order_total = 0
+    order_items_total = 0
+    for item in order_items:
+        subtotal = item.quantity * item.unity_price
+        order_total = order_total + subtotal
+        order_items_total = order_items_total + item.quantity
+
+    context = {
+        'order': order,
+        'order_items': order_items,
+        'order_total': order_total,
+        'order_items_total': order_items_total,
+    }
+    return render(request, 'orders/detail.html', context=context)

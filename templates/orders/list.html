@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %} Listagem de Pedidos {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+  <div class="page-header">
+    <h3 class="page-title">Pedidos</h3>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}"><i class="mdi mdi-home menu-icon"></i></a></li>
+        <li class="breadcrumb-item active" aria-current="page">pedidos</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="row">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="col-12">
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message|safe }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+
+  <div class="row">
+    <div class="col-12 grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Pedidos recentes</h4>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+              <tr>
+                <th> Cliente</th>
+                <th> Restaurante</th>
+                <th class="text-center"> Status</th>
+                <th class="text-right"> Criação</th>
+                <th class="text-right"> Ultima atualização</th>
+                <th class="text-right"> Ações</th>
+              </tr>
+              </thead>
+              <tbody>
+              {% for order in orders %}
+                <tr>
+                  <td>{{ order.customer }}</td>
+                  <td>{{ order.restaurant }}</td>
+                  {% if order.status == 'pending' %}
+                    <td class="text-center"><label class="badge badge-gradient-warning">PENDENTE</label></td>
+                  {% elif order.status == 'processing' %}
+                    <td class="text-center"><label class="badge badge-gradient-info">{{ order.status|upper }}</label></td>
+                  {% elif order.status == 'complete' %}
+                    <td class="text-center"><label class="badge badge-gradient-success">{{ order.status|upper }}</label></td>
+                  {% else %}
+                    <td class="text-center">{{ order.status }}</td>
+                  {% endif %}
+                  <td class="text-right">{{ order.created }}</td>
+                  <td class="text-right">{{ order.modified }}</td>
+                  <td class="text-right">
+                    <div class="btn-group" role="group" aria-label="Menu options">
+                    <a class="btn btn-primary text-light btn-sm" target="_blank" href=#"><i class="mdi mdi-link-variant"></i></a>
+                    <a class="btn btn-primary text-light btn-sm" href="#" class="label"><i class="mdi mdi-bell-ring-outline"></i></a>
+                    <a class="btn btn-primary text-light btn-sm" href="#" class="label"><i class="mdi mdi-cellphone"></i></a>
+                  </div>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
