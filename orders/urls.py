@@ -9,5 +9,6 @@ urlpatterns = [
          views.order_add_var_item, name='order_add_var_item'),
     path('cart/', views.cart, name='cart'),
     path('cart/<slug>/', views.cart, name='cart'),
-    path('checkout/<slug>/', views.checkout, name='checkout')
+    path('checkout/<slug>/', views.checkout, name='checkout'),
+    path('list/', views.orders_list, name='orders_list'),
 ]

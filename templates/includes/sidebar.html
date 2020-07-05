@@ -77,6 +77,24 @@
         </ul>
       </div>
     </li>
+
+    {% if request.user.is_superuser %}
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#orders-menu" aria-expanded="false" aria-controls="orders-menu">
+          <span class="menu-title">Pedidos</span>
+          <i class="menu-arrow"></i>
+          <i class="mdi mdi-file-multiple menu-icon"></i>
+        </a>
+        <div class="collapse" id="orders-menu">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"><a class="nav-link" href="{% url 'orders_list' %}">Todos os pedidos</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Relatórios</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    {% endif %}
+
     <li class="nav-item">
       <a class="nav-link" href="{% url 'logout' %}">
         <span class="menu-title">Sair</span>
