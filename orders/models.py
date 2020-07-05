@@ -37,6 +37,13 @@ class Order(Active, TimeStampedModel):
             super(Order, self).save(*args, **kwargs)
         super(Order, self).save(*args, **kwargs)
 
+    def order_total(self):
+        items = self.orderitem_set.all()
+        total = 0
+        for item in items:
+            total = total + item.quantity * item.unity_price
+        return total
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -47,3 +54,6 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField('Quantidade', default=1)
     unity_price = models.DecimalField('Valor unitário', max_digits=10,
                                       decimal_places=2, null=True, blank=True)
+
+    def subtotal(self):
+        return self.quantity * self.unity_price

@@ -94,7 +94,7 @@
       <p>Primeiro: {{ order.restaurant.menu_set.all.first }}</p>
     </div>
     <div class="col">
-      <a class="btn btn-rounded btn-success m-3 float-right" href="#">Checkout 💳</a>
+      <a class="btn btn-rounded btn-success m-3 float-right" href="{% url 'checkout' slug=order.slug %}">Checkout 💳</a>
     </div>
   </div>
 

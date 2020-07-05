@@ -34,7 +34,8 @@ def order_add_item(request, pk, restaurant_pk, menu_pk, **kwargs):
         item.save()
         messages.info(request,
                       f'{product.name} Já está no pedido. '
-                      f'<a href="/orders/cart/{order_slug}/" class="alert-link">Ver pedido</a>.')
+                      f'<a href="/orders/cart/{order_slug}/" '
+                      f'class="alert-link">Ver pedido</a>.')
 
         return redirect(reverse('menu_display', kwargs={'pk': menu.pk,
                                                         'slug': menu.slug}))
@@ -44,7 +45,9 @@ def order_add_item(request, pk, restaurant_pk, menu_pk, **kwargs):
         item.save()
 
     messages.success(request, f'{item.item.name} adicionado ao pedido. '
-                              f'<a href="/orders/cart/{order_slug}/" class="alert-link">Ver pedido</a>.')
+                              f'<a href="/orders/cart/{order_slug}/" '
+                              f'class="alert-link">Ver pedido</a>.')
+
     return redirect(reverse('menu_display', kwargs={'pk': menu.pk,
                                                     'slug': menu.slug}))
 
@@ -75,7 +78,8 @@ def order_add_var_item(request, pk, var_pk, restaurant_pk, menu_pk, **kwargs):
         item.save()
         messages.info(request,
                       f'{product.name} Já está no pedido. '
-                      f'<a href="/orders/cart/{order_slug}/" class="alert-link">Ver pedido</a>.')
+                      f'<a href="/orders/cart/{order_slug}/" '
+                      f'class="alert-link">Ver pedido</a>.')
 
         return redirect(reverse('menu_display', kwargs={'pk': menu.pk,
                                                         'slug': menu.slug}))
@@ -87,7 +91,8 @@ def order_add_var_item(request, pk, var_pk, restaurant_pk, menu_pk, **kwargs):
         item.save()
 
     messages.success(request, f'{item.item.name} adicionado ao pedido. '
-                              f'<a href="/orders/cart/{order_slug}/" class="alert-link">Ver pedido</a>.')
+                              f'<a href="/orders/cart/{order_slug}/" '
+                              f'class="alert-link">Ver pedido</a>.')
     return redirect(reverse('menu_display', kwargs={'pk': menu.pk,
                                                     'slug': menu.slug}))
 
@@ -127,3 +132,22 @@ def cart(request, slug):
                                                 'order_total': order_total,
                                                 'form': form,
                                                 'formset': formset, })
+
+
+def checkout(request, slug):
+    order = Order.objects.get(slug=slug)
+    order_items = OrderItem.objects.filter(order=order)
+    order_total = 0
+    order_items_total = 0
+    for item in order_items:
+        subtotal = item.quantity * item.unity_price
+        order_total = order_total + subtotal
+        order_items_total = order_items_total + item.quantity
+
+    context = {
+        'order': order,
+        'order_items': order_items,
+        'order_total': order_total,
+        'order_items_total': order_items_total,
+    }
+    return render(request, 'orders/simple_checkout.html', context=context)
