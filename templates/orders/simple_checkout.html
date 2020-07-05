@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+{% load core_extras %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    /** grid **/
+    body, main {
+      display: grid;
+      grid-gap: 1rem;
+    }
+
+    main {
+      grid-template: "content"  "summary"  "actions"  "help" "promo";
+    }
+
+    @media (min-width: 50rem) {
+      main {
+        grid-template: "promo promo" "content summary"  "content actions"  "content help";
+        grid-template-columns: auto 20rem;
+      }
+    }
+
+    .summary {
+      grid-area: summary;
+    }
+
+    .promo {
+      grid-area: promo;
+    }
+
+    .actions {
+      grid-area: actions;
+    }
+
+    .cart {
+      grid-area: content;
+    }
+
+    .help {
+      grid-area: help;
+    }
+
+    /** styling **/
+    @media (min-width: 50rem) {
+      body, main {
+        max-width: 60rem;
+      }
+
+      body {
+        margin: auto;
+      }
+    }
+
+    .summary {
+      display: -webkit-box;
+      display: flex;
+      -webkit-box-pack: justify;
+      justify-content: space-between;
+      font-size: 18px;
+      background: #5c527a;
+    }
+
+    .summary .total {
+      font-family: monospace;
+      text-align: right;
+    }
+
+    .cart .item {
+      display: -webkit-box;
+      display: flex;
+      -webkit-box-pack: justify;
+      justify-content: space-between;
+      font-family: monospace;
+      font-size: 18px;
+    }
+
+    .cart .item:not(:last-child) {
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px dotted #60709f;
+    }
+
+    .cart .name {
+      font-size: 18px;
+      font-weight: 400;
+      margin: 0;
+    }
+
+    .cart .price {
+      font-family: monospace;
+      margin: 0;
+    }
+
+    @media (min-width: 50rem) {
+      .cart {
+        padding: 2rem 1rem;
+      }
+
+      .cart .name,
+      .cart .price {
+        font-size: 24px;
+      }
+
+      .cart .item:not(:last-child) {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+      }
+    }
+
+    .actions {
+      background: #527a70;
+      text-align: right;
+    }
+
+    .actions button {
+      background: #26d9ac;
+      box-shadow: 0 2px 4px #11221e;
+      border: none;
+      border-radius: 3px;
+      padding: 0.5rem 1rem;
+    }
+
+    .back-btn {
+      background: #26d9ac;
+      box-shadow: 0 2px 4px #11221e;
+      border: none;
+      border-radius: 3px;
+      padding: 0.5rem 1rem;
+      float: left;
+      color: #0b0e11;
+    }
+
+    .promo {
+      color: #3c3d29;
+      background: #777a52;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    @media (min-width: 50rem) {
+      .promo {
+        min-height: 0;
+        text-align: center;
+      }
+    }
+
+    .help {
+      color: #c9a79c;
+      background: #7a5c52;
+      text-align: center;
+    }
+
+    header, footer, section {
+      background: #414758;
+      box-shadow: 0 4px 4px 2px rgba(22, 24, 29, 0.2);
+      border-radius: 3px;
+      padding: 1rem;
+    }
+
+    section {
+      min-height: 3rem;
+    }
+
+    header, footer {
+      box-shadow: none;
+      color: #4c5367;
+      background: #2e323e;
+      border: 1px dashed #414758;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.2rem;
+      word-spacing: 1rem;
+      font-weight: 800;
+    }
+
+    body {
+      color: white;
+      background: #323743;
+      padding: 20px;
+      font-family: "Heebo", sans-serif;
+      font-weight: 300;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+  </style>
+</head>
+<body id=cart>
+
+<header>
+  {{ order.slug }}
+</header>
+
+<main>
+
+  <section class="summary">
+    <div class="items">🛒 {{ order_items_total }} items</div>
+    <div class="total">R$ {{ order.order_total }}</div>
+  </section>
+
+  <section class="actions">
+    <a class="back-btn" href="{% url 'cart' slug=order.slug %}">Voltar</a>
+    <button>Confirmar ✓</button>
+  </section>
+
+  <section class="cart">
+    <ul>
+      {% for item in order_items %}
+        <li class="item">
+          <h3 class="name">{{ item.item }} {% if item.variation %} {{ item.variation }}{% endif %}</h3>
+          <p style="text-align: right;" class="price">
+            <span>{{ item.unity_price }} x {{ item.quantity }}</span><br>
+            R$ {{ item.unity_price|subtotal:item.quantity|currency_display }}
+          </p>
+        </li>
+      {% endfor %}
+
+    </ul>
+  </section>
+
+  <section class="promo">
+    <div>🌟 Offer Ends Soon! 🌟</div>
+  </section>
+
+  <section class="help">
+    ❓ Precisa de ajuda?
+    <p>📞 {{ order.restaurant.phone }}</p>
+  </section>
+
+</main>
+
+<footer>
+  {{ order.restaurant.name }} - {{ order.restaurant.address }}
+</footer>
+
+</body>
+</html>

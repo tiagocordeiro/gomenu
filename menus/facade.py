@@ -39,6 +39,7 @@ def menu_builder(pk):
                     menu_itens[category_count]["itens"][product_count][
                         "product"]["price"].append(
                         {
+                            "variation_pk": variacao.variation.pk,
                             "variation_name": variacao.variation.name,
                             "variation_price": variation.price
                         })

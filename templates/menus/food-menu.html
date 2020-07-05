@@ -97,7 +97,14 @@
             {% if item.product.price|length >= 1 %}
               {% for variacao in item.product.price %}
                 <div class='col'>
-                  <h5><span class="badge badge-warning my-4 p-3">{{ variacao.variation_name }}:<hr>R$ {{ variacao.variation_price }}</span>
+                  {% if online_sales == True %}
+                    <h5>
+                    <a href="{% url 'order_add_var_item' pk=item.product.pk var_pk=variacao.variation_pk restaurant_pk=restaurant_pk menu_pk=menu_pk %}">
+                      <span class="badge badge-warning my-4 p-3">{{ variacao.variation_name }}:<hr>R$ {{ variacao.variation_price }}</span>
+                    </a>
+                  {% else %}
+                    <h5><span class="badge badge-warning my-4 p-3">{{ variacao.variation_name }}:<hr>R$ {{ variacao.variation_price }}</span>
+                  {% endif %}
                   </h5>
                 </div>
               {% endfor %}
