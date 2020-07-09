@@ -30,7 +30,7 @@ jobs:
         python-version: 3.8
     - name: Copying configurations
       run: |
-        cp contrib/env-sample-travis-ci .env
+        cp contrib/env-sample .env
     - name: Install dependencies
       run: |
         sudo locale-gen pt_BR.UTF-8
