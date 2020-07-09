@@ -11,8 +11,9 @@ def index(request):
     return render(request, 'base.html')
 
 
+@login_required
 def dashboard(request):
-    return render(request, 'base.html')
+    return render(request, 'core/dashboard.html')
 
 
 @login_required

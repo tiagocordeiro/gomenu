@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+  <div class="row" id="proBanner">
+    <div class="col-12">
+      <span class="d-flex align-items-center purchase-popup">
+        <p>Like what you see? Check out our premium version for more.</p>
+        <a href="https://github.com/tiagocordeiro/djmenu" target="_blank" class="btn ml-auto download-button">Contribua no GitHub</a>
+        <a href="#" class="btn purchase-button">Upgrade To Pro</a>
+        <i class="mdi mdi-close" id="bannerClose"></i>
+      </span>
+    </div>
+  </div>
+  <div class="page-header">
+    <h3 class="page-title">
+      <span class="page-title-icon bg-gradient-primary text-white mr-2"><i class="mdi mdi-home"></i></span> Dashboard
+    </h3>
+    <nav aria-label="breadcrumb">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">
+          <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="row">
+    <div class="col-md-4 stretch-card grid-margin">
+      <div class="card bg-gradient-danger card-img-holder text-white">
+        <div class="card-body">
+          <img src="{% static 'assets/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image"/>
+          <h4 class="font-weight-normal mb-3">Produtos <i class="mdi mdi-chart-line mdi-24px float-right"></i></h4>
+          <h2 class="mb-5">{{ resumo.total_produtos }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 stretch-card grid-margin">
+      <div class="card bg-gradient-info card-img-holder text-white">
+        <div class="card-body">
+          <img src="{% static 'assets/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image"/>
+          <h4 class="font-weight-normal mb-3">Categorias <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i></h4>
+          <h2 class="mb-5">{{ resumo.total_categorias }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 stretch-card grid-margin">
+      <div class="card bg-gradient-success card-img-holder text-white">
+        <div class="card-body">
+          <img src="{% static 'assets/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image"/>
+          <h4 class="font-weight-normal mb-3">Cardápios <i class="mdi mdi-diamond mdi-24px float-right"></i>
+          </h4>
+          <h2 class="mb-5">{{ resumo.total_cardapios }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-md-6">
+          <h1 class="display-4">Django Menu</h1>
+          <p class="lead">A simple solution for restaurants and pizzerias.</p>
+          <hr class="my-4">
+          <p>Django Menu is a simple menu application for the django framework. Django Menu is an ideal
+            application
+            for any size restaurant wishing to display their menu on a django site.</p>
+          <a class="btn btn-primary btn-lg my-3" href="https://github.com/tiagocordeiro/djmenu"
+             role="button" target="_blank">
+            <i class="fab fa-github"></i> Github
+          </a>
+        </div>
+        <div class="col-md-6">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/6Hlx33WapPo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+  <script src="{% static 'assets/js/dashboard.js' %}"></script>
+{% endblock javascripts %}
