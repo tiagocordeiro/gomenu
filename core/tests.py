@@ -3,6 +3,7 @@ from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
 
 from .admin import CompanyAdmin
+from .facade import get_dashboard_data_summary
 from .models import Company
 from .views import index
 
@@ -27,6 +28,11 @@ class IndexViewTest(TestCase):
                                                    password='top_secret')
         self.group = Group.objects.create(name='Staff Test')
         self.group.user_set.add(self.staff_user)
+
+        # Super user
+        self.super_user = User.objects.create_superuser(username='master',
+                                                        email='master@…',
+                                                        password='top_secret')
 
     def test_index_page_status_code_is_ok(self):
         request = self.factory.get('/')
@@ -68,3 +74,7 @@ class IndexViewTest(TestCase):
                              '/accounts/login/?next=/dashboard/',
                              status_code=302,
                              target_status_code=200)
+
+    def test_get_dashboardcontext_facade(self):
+        context = get_dashboard_data_summary(self.super_user)
+        self.assertIn('total_products', context)
