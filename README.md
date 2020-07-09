@@ -1,9 +1,12 @@
-# gomenu
-Multiaccount edition of djmenu
+# goMenu
+Multi-restaurant edition of DjangoMenu
 https://github.com/tiagocordeiro/djmenu
 
 ![Python application](https://github.com/tiagocordeiro/gomenu/workflows/Python%20application/badge.svg?branch=master)
+[![Build Status](https://travis-ci.org/tiagocordeiro/gomenu.svg?branch=master)](https://travis-ci.org/tiagocordeiro/gomenu)
 [![Updates](https://pyup.io/repos/github/tiagocordeiro/gomenu/shield.svg)](https://pyup.io/repos/github/tiagocordeiro/gomenu/)
+[![codecov](https://codecov.io/gh/tiagocordeiro/gomenu/branch/master/graph/badge.svg)](https://codecov.io/gh/tiagocordeiro/gomenu)
+
 
 ### Como rodar o projeto
 

@@ -50,7 +50,7 @@ jobs:
       env:
         DJANGO_SETTINGS_MODULE: "gomenu.settings"
       run: |
-        coverage run -m pytest --verbosity=2
+        coverage run manage.py test -v 2
     - name: Posting Coverage
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

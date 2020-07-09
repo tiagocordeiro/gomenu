@@ -19,6 +19,8 @@ before_script:
 # command to run tests
 script:
   - flake8 .
-  - coverage run -m pytest --verbosity=2
+  - coverage run manage.py test -v 2
+# If using pytest ...
+#  - coverage run -m pytest --verbosity=2
 after_success:
   - codecov
