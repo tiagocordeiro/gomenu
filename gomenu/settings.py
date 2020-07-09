@@ -23,71 +23,69 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default=[], cast=Csv())
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
     # MyApps
-    'core',
-    'restaurants',
-    'menus',
-    'products',
-    'orders',
-
+    "core",
+    "restaurants",
+    "menus",
+    "products",
+    "orders",
     # QRcode
-    'qr_code',
+    "qr_code",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'gomenu.urls'
+ROOT_URLCONF = "gomenu.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'gomenu.wsgi.application'
+WSGI_APPLICATION = "gomenu.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+default_dburl = "sqlite:///" + os.path.join(BASE_DIR, "db.sqlite3")
 
 DATABASES = {
-    'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
+    "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
 }
 
 # Password validation
@@ -95,25 +93,22 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", },
 ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'pt-br'
+LANGUAGE_CODE = "pt-br"
 
-TIME_ZONE = 'America/Sao_Paulo'
+TIME_ZONE = "America/Sao_Paulo"
 
 USE_I18N = True
 
@@ -122,18 +117,18 @@ USE_L10N = True
 USE_TZ = True
 
 # Redirect to home URL after login # TODO(Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_REDIRECT_URL = "dashboard"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 # Configuration for dev environment
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Media Files (Uploads)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
 
 COLLECTFAST_ENABLED = False
 
@@ -141,52 +136,52 @@ COLLECTFAST_ENABLED = False
 django_heroku.settings(locals())
 
 # Force ssl if run in Heroku
-if 'DYNO' in os.environ:  # pragma: no cover
+if "DYNO" in os.environ:  # pragma: no cover
     SECURE_SSL_REDIRECT = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # STORAGE CONFIGURATION IN S3 AWS
 # -----------------------------------------------------------------------------
 # Uploaded Media Files
 # -----------------------------------------------------------------------------
-AWS_ACCESS_KEY_ID = config('DJANGO_AWS_ACCESS_KEY_ID', default=False)
+AWS_ACCESS_KEY_ID = config("DJANGO_AWS_ACCESS_KEY_ID", default=False)
 if AWS_ACCESS_KEY_ID:  # pragma: no cover
     COLLECTFAST_ENABLED = True
     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
-    INSTALLED_APPS.append('s3_folder_storage')
-    INSTALLED_APPS.append('storages')
-    AWS_SECRET_ACCESS_KEY = config('DJANGO_AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = config('DJANGO_AWS_STORAGE_BUCKET_NAME')
+    INSTALLED_APPS.append("s3_folder_storage")
+    INSTALLED_APPS.append("storages")
+    AWS_SECRET_ACCESS_KEY = config("DJANGO_AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = config("DJANGO_AWS_STORAGE_BUCKET_NAME")
     AWS_S3_OBJECT_PARAMETERS = {
-        'CacheControl': 'max-age=86400',
+        "CacheControl": "max-age=86400",
     }
     AWS_PRELOAD_METADATA = True
     AWS_AUTO_CREATE_BUCKET = False
     AWS_QUERYSTRING_AUTH = False
     AWS_S3_CUSTOM_DOMAIN = None
 
-    AWS_DEFAULT_ACL = 'public-read'
+    AWS_DEFAULT_ACL = "public-read"
 
     # AWS cache settings, don't change unless you know what you're doing:
     AWS_EXPIRY = 60 * 60 * 24 * 7
 
     # Revert the following and use str after the above-mentioned bug is fixed in
     # either django-storage-redux or boto
-    control = f'max-age={AWS_EXPIRY:d}, s-maxage={AWS_EXPIRY:d}, must-revalidate'
+    control = f"max-age={AWS_EXPIRY:d}, s-maxage={AWS_EXPIRY:d}, must-revalidate"
 
     # Upload Media Folder
-    DEFAULT_FILE_STORAGE = 's3_folder_storage.s3.DefaultStorage'
-    DEFAULT_S3_PATH = 'media'
-    MEDIA_ROOT = f'/{DEFAULT_S3_PATH}/'
-    MEDIA_URL = f'//{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/{DEFAULT_S3_PATH}/'
+    DEFAULT_FILE_STORAGE = "s3_folder_storage.s3.DefaultStorage"
+    DEFAULT_S3_PATH = "media"
+    MEDIA_ROOT = f"/{DEFAULT_S3_PATH}/"
+    MEDIA_URL = f"//{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/{DEFAULT_S3_PATH}/"
 
     # Static Assets
     # -------------------------------------------------------------------------
-    STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
-    STATIC_S3_PATH = 'static'
-    STATIC_ROOT = f'/{STATIC_S3_PATH}/'
-    STATIC_URL = f'//{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/{STATIC_S3_PATH}/'
-    ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+    STATICFILES_STORAGE = "s3_folder_storage.s3.StaticStorage"
+    STATIC_S3_PATH = "static"
+    STATIC_ROOT = f"/{STATIC_S3_PATH}/"
+    STATIC_URL = f"//{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/{STATIC_S3_PATH}/"
+    ADMIN_MEDIA_PREFIX = STATIC_URL + "admin/"
 
 # -----------------------------------------------------------------------------
