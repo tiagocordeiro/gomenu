@@ -5,7 +5,7 @@ services:
   postgresql
 env:
   global:
-    - DJANGO_SETTINGS_MODULE="djmenu.settings"
+    - DJANGO_SETTINGS_MODULE="gomenu.settings"
 addons:
   postgresql: '9.5'
 # command to install dependencies
