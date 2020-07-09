@@ -2,6 +2,9 @@
 Enterprise edition of djmenu
 https://github.com/tiagocordeiro/djmenu
 
+![Python application](https://github.com/tiagocordeiro/gomenu/workflows/Python%20application/badge.svg?branch=master)
+[![Updates](https://pyup.io/repos/github/tiagocordeiro/gomenu/shield.svg)](https://pyup.io/repos/github/tiagocordeiro/gomenu/)
+
 ### Como rodar o projeto
 
 * Clone esse repositório.
