@@ -1,0 +1,58 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python application
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11.5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports: ['5432:5432']
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Copying configurations
+      run: |
+        cp contrib/env-sample-travis-ci .env
+    - name: Install dependencies
+      run: |
+        sudo locale-gen pt_BR.UTF-8
+        sudo apt-get install libpq-dev
+        python -m pip install --upgrade pip
+        pip install -r requirements-dev.txt codecov
+    - name: Lint with flake8
+      run: |
+        flake8 .
+    - name: Migrate
+      run: |
+        python manage.py migrate --noinput
+    - name: Collectstatic
+      run: |
+        python manage.py collectstatic --noinput
+    - name: Test with coverage
+      env:
+        DJANGO_SETTINGS_MODULE: "gomenu.settings"
+      run: |
+        coverage run -m pytest --verbosity=2
+    - name: Posting Coverage
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: |
+        codecov
