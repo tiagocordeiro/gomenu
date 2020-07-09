@@ -3,6 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.forms import inlineformset_factory
 from django.shortcuts import render, redirect
 
+from core.facade import get_dashboard_data_summary
 from core.forms import ProfileForm, SignUpForm
 from core.models import UserProfile
 
@@ -13,7 +14,14 @@ def index(request):
 
 @login_required
 def dashboard(request):
-    return render(request, 'core/dashboard.html')
+    dashboard_data = get_dashboard_data_summary(request.user)
+
+    context = {
+        'total_products': dashboard_data['total_products'],
+        'total_categories': dashboard_data['total_categories'],
+        'total_menus': dashboard_data['total_menus'],
+    }
+    return render(request, 'core/dashboard.html', context=context)
 
 
 @login_required
