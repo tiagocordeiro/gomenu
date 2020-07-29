@@ -187,7 +187,25 @@ def variation_new(request):
 
 @login_required
 def import_from_woocommerce(request, product_id):
-    product = get_product(product_id=product_id)
+    try:
+        restaurant = Restaurant.objects.get(manager=request.user)
+    except Restaurant.DoesNotExist:
+        messages.warning(request, "Você precisa cadastrar um restaurante")
+        return redirect('new_restaurant')
+
+    try:
+        woo_integration_data = restaurant.restaurantintegrations_set
+        consumer_key = woo_integration_data.get().wc_consumer_key
+        consumer_secret = woo_integration_data.get().wc_consumer_secret
+        woo_commerce_url = woo_integration_data.get().woo_commerce_url
+    except RestaurantIntegrations.DoesNotExist:
+        messages.warning(request, "Solicite a integração para o suporte")
+        return redirect('dashboard')
+
+    product = get_product(product_id=product_id,
+                          consumer_key=consumer_key,
+                          consumer_secret=consumer_secret,
+                          woo_commerce_url=woo_commerce_url)
     return JsonResponse(product.json())
 
 
