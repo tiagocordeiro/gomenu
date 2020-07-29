@@ -35,7 +35,7 @@ def new_menu(request):
     menu_form = Menu()
     categories_menu_formset = inlineformset_factory(
         Menu, MenuCategory,
-        form=MenuCategoriesForm, extra=10, max_num=10
+        form=MenuCategoriesForm, extra=30, max_num=30
     )
     if request.method == 'POST':
         form = MenuForm(request.POST, instance=menu_form, prefix='main')
@@ -84,7 +84,7 @@ def update_menu(request, pk):
 
     menu_categories_formset = inlineformset_factory(Menu, MenuCategory,
                                                     form=MenuCategoriesForm,
-                                                    extra=10, max_num=10,
+                                                    extra=30, max_num=30,
                                                     can_delete=True)
 
     if request.method == 'POST':
