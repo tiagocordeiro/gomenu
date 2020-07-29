@@ -44,7 +44,7 @@ def get_from_category(
     category_id, restaurant, consumer_key, consumer_secret, woo_commerce_url
 ):
     wpapi = setup_wp_api(consumer_key, consumer_secret, woo_commerce_url)
-    products = wpapi.get(f"products?category={category_id}")
+    products = wpapi.get(f"products?category={category_id}&per_page=100")
 
     new_products = []
     old_products = []
