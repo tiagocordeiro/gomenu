@@ -1,10 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
-<p>Olá</p>
-</body>
-</html>
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Dashboard {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+  <div class="row" id="proBanner">
+    <div class="col-12">
+      <span class="d-flex align-items-center purchase-popup">
+        <p>Gostou do projeto?</p>
+        <a href="https://github.com/tiagocordeiro/gomenu" target="_blank" class="btn ml-auto download-button">Contribua no GitHub</a>
+        <i class="mdi mdi-close" id="bannerClose"></i>
+      </span>
+    </div>
+  </div>
+  <div class="page-header">
+    <h3 class="page-title">
+      <span class="page-title-icon bg-gradient-primary text-white mr-2"><i class="mdi mdi-home"></i></span> Principal
+    </h3>
+    <nav aria-label="breadcrumb">
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">
+          <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="page-header">
+    <div class="jumbotron">
+      <div class="row">
+        <div class="col-md-6">
+          <h1 class="display-4">Django Menu</h1>
+          <p class="lead">A simple solution for restaurants and pizzerias.</p>
+          <hr class="my-4">
+          <p>Django Menu is a simple menu application for the django framework. Django Menu is an ideal
+            application
+            for any size restaurant wishing to display their menu on a django site.</p>
+          <a class="btn btn-primary btn-lg my-3" href="https://github.com/tiagocordeiro/gomenu"
+             role="button" target="_blank">
+            <i class="fab fa-github"></i> Github
+          </a>
+        </div>
+        <div class="col-md-6">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/6Hlx33WapPo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Live Preview</h4>
+          <p class="card-description"> Alguns exemplos de <code>cardápios</code>
+          </p>
+          <table class="table table-responsive-sm">
+            <thead>
+            <tr>
+              <th>Cardápio</th>
+              <th class="text-center">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="unread">
+              <td>
+                <h6>Lanches e Sucos</h6>
+                <p class="m-0">Exemplo com variedade de lanches, sucos e vitaminas</p>
+              </td>
+              <td class="text-right">
+                <div class="btn-group" role="group" aria-label="Menu options">
+                  <a class="btn btn-primary text-light" target="_blank" href="https://gomenu.herokuapp.com/menus/view/1/streetfruit/"><i class="mdi mdi-link-variant"></i></a>
+                  <a class="btn btn-primary text-light" target="_blank" href="https://gomenu.herokuapp.com/menus/qrcode/sheet/4/l/" class="label"><i class="mdi mdi-qrcode"></i></a>
+                </div>
+              </td>
+            </tr>
+            <tr class="unread">
+              <td>
+                <h6>Pizzaria</h6>
+                <p class="m-0">Exemplo com massas e pizzas</p>
+              </td>
+              <td class="text-right">
+                <div class="btn-group" role="group" aria-label="Menu options">
+                  <a class="btn btn-primary text-light" target="_blank" href="https://gomenu.herokuapp.com/menus/view/3/vituccio/"><i class="mdi mdi-link-variant"></i></a>
+                  <a class="btn btn-primary text-light" target="_blank" href="https://gomenu.herokuapp.com/menus/qrcode/sheet/3/m/" class="label"><i class="mdi mdi-qrcode"></i></a>
+                </div>
+              </td>
+            </tr>
+            <tr class="unread">
+              <td>
+                <h6>Cardápio com Pedido</h6>
+                <p class="m-0">Exemplo com pedido habilitado para o restaurante. (Em desenvolvimento)</p>
+              </td>
+              <td class="text-right">
+                <div class="btn-group" role="group" aria-label="Menu options">
+                  <a class="btn btn-primary text-light" target="_blank" href="https://gomenu.herokuapp.com/menus/view/6/principal/"><i class="mdi mdi-link-variant"></i></a>
+                  <a class="btn btn-primary text-light" target="_blank" href="https://gomenu.herokuapp.com/menus/qrcode/sheet/6/s/" class="label"><i class="mdi mdi-qrcode"></i></a>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+  <script src="{% static 'assets/js/dashboard.js' %}"></script>
+{% endblock javascripts %}

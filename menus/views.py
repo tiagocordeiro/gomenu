@@ -165,7 +165,6 @@ def menu_qrcode_gen(request, pk):
     return render(request, 'menus/qr-gen.html', context=context)
 
 
-@login_required
 def qr_sheet_gen(request, pk, size):
     """
     Gera uma folha de QR codes.

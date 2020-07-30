@@ -9,7 +9,7 @@ from core.models import UserProfile
 
 
 def index(request):
-    return render(request, 'base.html')
+    return render(request, 'index.html')
 
 
 @login_required
