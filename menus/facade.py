@@ -13,7 +13,9 @@ def menu_builder(pk):
     category_count = 0
 
     for category in menu.menucategory_set.select_related('category'):
-        menu_itens.append({"category": category.category.name, "itens": []})
+        menu_itens.append({"category": category.category.name,
+                           "show_in_menu": category.show_in_menu,
+                           "itens": [], })
         product_count = 0
 
         for product in Product.objects.filter(category=category.category):

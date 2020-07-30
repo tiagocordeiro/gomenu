@@ -55,16 +55,13 @@
           -webkit-print-color-adjust: exact;
       }
 
-      {#body {#}
-      {#    margin: 0;#}
-      {#    padding: 0;#}
-      {##}
-      {#    /* make it look decent enough */#}
-      {#    background: #232323;#}
-      {#    color: #cdcdcd;#}
-      {#    font-family: "Avenir Next", "Avenir", sans-serif;#}
-      {
-      #}#}
+      /* Dark Mode???
+      body {
+          background: #232323;
+          color: #cdcdcd;
+          font-family: "Avenir Next", "Avenir", sans-serif;
+      }
+      */
 
   </style>
 
@@ -80,13 +77,13 @@
   <div class="navbar-collapse collapse" id="navbarCollapse" style="">
     <ul class="navbar-nav mr-auto">
       {% for category in menu %}
-        <li class="nav-item">
-          <a class="nav-link" href="#{{ category.category }}">{{ category.category }}</a>
-        </li>
+        {% if category.show_in_menu %}
+          <li class="nav-item">
+            <a class="nav-link" href="#{{ category.category }}">{{ category.category }}</a>
+          </li>
+        {% endif %}
       {% endfor %}
-
     </ul>
-
   </div>
 </nav>
 
