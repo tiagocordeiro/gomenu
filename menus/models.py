@@ -31,6 +31,7 @@ class MenuCategory(TimeStampedModel, Active):
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     order = models.PositiveIntegerField('ordem')
+    show_in_menu = models.BooleanField(default=True)
 
     def __str__(self):
         return str(self.category.name + ' - ' + self.menu.name)
