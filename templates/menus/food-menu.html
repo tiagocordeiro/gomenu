@@ -26,41 +26,70 @@
   <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
   <link href="https://fonts.googleapis.com/css?family=Yesteryear&display=swap" rel="stylesheet">
   <style>
-    @page {
-      size: A4;
-      margin: 0;
-    }
+      @page {
+          size: A4;
+          margin: 0;
+      }
 
-    body {
-      margin: 0;
-    }
+      body {
+          margin: 0;
+      }
 
-    .badge-warning {
-      background-color: #ffc1075c;
-    }
+      .badge-warning {
+          background-color: #ffc1075c;
+      }
 
-    .food-menu-item {
-      border-bottom-style: dotted;
-      border-color: gray;
-    }
+      .food-menu-item {
+          border-bottom-style: dotted;
+          border-color: gray;
+      }
 
-    .food-category-title {
-      border-bottom-style: dotted;
-      border-color: gray;
-      font-family: 'Yesteryear', cursive;
-    }
+      .food-category-title {
+          border-bottom-style: dotted;
+          border-color: gray;
+          font-family: 'Yesteryear', cursive;
+      }
 
-    body {
-      background-image: url("{% static 'assets/images/restaurant.png' %}");
-      -webkit-print-color-adjust: exact;
-    }
+      body {
+          background-image: url("{% static 'assets/images/restaurant.png' %}");
+          -webkit-print-color-adjust: exact;
+      }
+
+      {#body {#}
+      {#    margin: 0;#}
+      {#    padding: 0;#}
+      {##}
+      {#    /* make it look decent enough */#}
+      {#    background: #232323;#}
+      {#    color: #cdcdcd;#}
+      {#    font-family: "Avenir Next", "Avenir", sans-serif;#}
+      {
+      #}#}
 
   </style>
 
   <title>{{ menu_title }}</title>
 </head>
 
-<body>
+<body style="margin-top: 56px;">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="#">{{ restaurant }}</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse collapse" id="navbarCollapse" style="">
+    <ul class="navbar-nav mr-auto">
+      {% for category in menu %}
+        <li class="nav-item">
+          <a class="nav-link" href="#{{ category.category }}">{{ category.category }}</a>
+        </li>
+      {% endfor %}
+
+    </ul>
+
+  </div>
+</nav>
+
 
 <section class="container flex flex-wrap">
 
@@ -80,6 +109,7 @@
   </div>
 
   {% for category in menu %}
+    <div id="{{ category.category }}" style="margin-bottom: 77px;"></div>
     <div class="menu-category">
       <div class="d-flex justify-content-center mt-5">
         <h2 class="text-center food-category-title">{{ category.category }}</h2>
@@ -130,5 +160,11 @@
 {% if online_sales == True %}
   <script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
 {% endif %}
+
+<script>
+    $('.navbar-nav>li>a').on('click', function () {
+        $('.navbar-collapse').collapse('hide');
+    });
+</script>
 </body>
 </html>
