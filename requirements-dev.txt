@@ -1,4 +1,4 @@
-django-extensions==3.0.5
+django-extensions==3.0.7
 ipython==7.17.0
 pytest-django==3.9.0
 coverage==5.2.1
