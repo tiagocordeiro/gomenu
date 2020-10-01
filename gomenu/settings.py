@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     "orders",
     # QRcode
     "qr_code",
+    # Admin ordering
+    "admin_ordering",
 ]
 
 MIDDLEWARE = [
