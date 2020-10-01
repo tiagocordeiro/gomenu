@@ -24,12 +24,13 @@ class Product(TimeStampedModel, Active):
     description = models.TextField("Descrição", blank=True)
     price = models.DecimalField("Preço", max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    order = models.PositiveIntegerField('ordem', blank=True, null=True)
 
     def __str__(self):
         return str(self.name)
 
     class Meta:
-        ordering = ("name",)
+        ordering = ("order", "name")
         verbose_name = "Produto"
         verbose_name_plural = "Produtos"
 
