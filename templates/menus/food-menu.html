@@ -119,7 +119,7 @@
       {% for item in category.itens %}
         <div class="row justify-content-between align-items-center food-menu-item">
           <div class='col-lg-6 col-md-12'>
-            <h4 class="mt-4">{{ item.product.name }}</h4>
+            <h4 class="mt-2">{{ item.product.name }}</h4>
             {% if item.product.description %}
               <p class="item-description">{{ item.product.description }}</p>
             {% endif %}
@@ -131,10 +131,10 @@
                   {% if online_sales == True %}
                     <h5>
                     <a href="{% url 'order_add_var_item' pk=item.product.pk var_pk=variacao.variation_pk restaurant_pk=restaurant_pk menu_pk=menu_pk %}">
-                      <span class="badge badge-warning my-4 p-3">{{ variacao.variation_name }}:<hr>R$ {{ variacao.variation_price }}</span>
+                      <span class="badge badge-warning mt-2 p-3">{{ variacao.variation_name }}:<hr>R$ {{ variacao.variation_price }}</span>
                     </a>
                   {% else %}
-                    <h5><span class="badge badge-warning my-4 p-3">{{ variacao.variation_name }}:<hr>R$ {{ variacao.variation_price }}</span>
+                    <h5><span class="badge badge-warning mt-2 p-3">{{ variacao.variation_name }}:<hr>R$ {{ variacao.variation_price }}</span>
                   {% endif %}
                   </h5>
                 </div>
@@ -143,10 +143,10 @@
               <div class='col'>
                 {% if online_sales == True %}
                   <h5>
-                    <a href="{% url 'order_add_item' pk=item.product.pk restaurant_pk=restaurant_pk menu_pk=menu_pk %}"><span class="badge badge-warning my-4 p-3">R$ {{ item.product.price }}</span></a>
+                    <a href="{% url 'order_add_item' pk=item.product.pk restaurant_pk=restaurant_pk menu_pk=menu_pk %}"><span class="badge badge-warning mt-2 p-3">R$ {{ item.product.price }}</span></a>
                   </h5>
                 {% else %}
-                  <h5><span class="badge badge-warning my-4 p-3">R$ {{ item.product.price }}</span></h5>
+                  <h5><span class="badge badge-warning mt-2 p-3">R$ {{ item.product.price }}</span></h5>
                 {% endif %}
               </div>
             {% endif %}
