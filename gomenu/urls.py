@@ -19,6 +19,8 @@ from django.urls import path, include
 
 from gomenu import settings
 
+admin.site.site_header = 'goMenu'
+
 urlpatterns = [
     path('', include('core.urls')),
     path('admin/', admin.site.urls),
