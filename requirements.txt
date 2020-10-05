@@ -22,4 +22,4 @@ django-s3-folder-storage==0.5
 sentry-sdk==0.18.0
 
 # Admin Order
-django-admin-ordering===0.12.0
+django-admin-ordering===0.13.1
