@@ -17,7 +17,7 @@
     <div class="panel profile-cover">
       <div class="profile-cover__img">
         {% if usuario.avatar.url is None %}
-          <img src="{% static 'assets/img/avatars/01_150x150.png' %}" alt="" class="rounded-circle">
+          <img src="{% static 'assets/images/faces-clipart/pic-4.png' %}" alt="" class="rounded-circle">
         {% else %}
           <img src="{{ usuario.avatar.url }}" alt="" class="rounded-circle" style="object-fit: cover; height: 120px;">
         {% endif %}
@@ -28,7 +28,7 @@
         {% endif %}
       </div>
 
-      <div class="profile-cover__action" data-bg-img="{% static 'images/background1.jpg' %}" data-overlay="0.3">
+      <div class="profile-cover__action" data-bg-img="{% static 'assets/images/dashboard/img_1.jpg' %}" data-overlay="0.3">
         {#      <div class="profile-cover__action" data-bg-img="{% static 'assets/img/covers/01_800x150.jpg' %}" data-overlay="0.3">#}
 
         <button class="btn btn-rounded btn-info">

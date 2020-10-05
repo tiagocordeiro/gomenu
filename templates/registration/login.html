@@ -17,7 +17,9 @@
   <!-- Layout styles -->
   <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
   <!-- End layout styles -->
-  <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}"/>
+  <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+  <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+  <meta property="og:image" content="{% static 'assets/images/favicon.png' %}">
 </head>
 <body>
 <div class="container-scroller">
@@ -74,7 +76,8 @@
                   <label class="form-check-label text-muted">
                     <input type="checkbox" class="form-check-input"> Mantenha-me conectado </label>
                 </div>
-                <a href="{% url 'password_reset' %}" class="auth-link text-black">Esqueceu a senha?</a>
+                <a href="https://www.gomenu.app.br/#contato" class="auth-link text-black">Não tem uma conta?</a>
+{#                <a href="{% url 'password_reset' %}" class="auth-link text-black">Esqueceu a senha?</a>#}
               </div>
               <div class="text-center mt-4 font-weight-light">
                 &copy; <a href="{% url 'index' %}">goMenu</a>.

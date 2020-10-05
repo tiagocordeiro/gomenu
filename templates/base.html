@@ -20,7 +20,9 @@
   <!-- Layout styles -->
   <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
   <!-- End layout styles -->
-  <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}"/>
+  <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+  <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+  <meta property="og:image" content="{% static 'assets/images/favicon.png' %}">
 
   <!-- Specific CSS goes HERE -->
   {% block stylesheets %}{% endblock stylesheets %}

@@ -63,7 +63,7 @@ class IndexViewTest(TestCase):
         request = self.client.get(reverse('dashboard'))
 
         self.assertEqual(request.status_code, 200)
-        self.assertContains(request, 'Django Menu')
+        self.assertContains(request, 'goMenu')
 
     def test_dashboard_status_code_with_no_logged_user(self):
         self.client.logout()
