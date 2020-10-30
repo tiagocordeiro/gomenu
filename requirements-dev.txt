@@ -1,5 +1,5 @@
 django-extensions==3.0.9
-ipython==7.18.1
+ipython==7.19.0
 pytest-django==3.10.0
 coverage==5.3
 flake8==3.8.4
