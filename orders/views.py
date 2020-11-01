@@ -38,8 +38,8 @@ def order_add_item(request, pk, restaurant_pk, menu_pk, **kwargs):
                       f'<a href="/orders/cart/{order_slug}/" '
                       f'class="alert-link">Ver pedido</a>.')
 
-        return redirect(reverse('menu_display', kwargs={'pk': menu.pk,
-                                                        'slug': menu.slug}))
+        return redirect(reverse('restaurant_menu', kwargs={'restaurant_slug': restaurant.slug,
+                                                           'menu_slug': menu.slug}))
 
     else:
         item = OrderItem(order=order, item=product, unity_price=product.price)
@@ -49,8 +49,8 @@ def order_add_item(request, pk, restaurant_pk, menu_pk, **kwargs):
                               f'<a href="/orders/cart/{order_slug}/" '
                               f'class="alert-link">Ver pedido</a>.')
 
-    return redirect(reverse('menu_display', kwargs={'pk': menu.pk,
-                                                    'slug': menu.slug}))
+    return redirect(reverse('restaurant_menu', kwargs={'restaurant_slug': restaurant.slug,
+                                                       'menu_slug': menu.slug}))
 
 
 def order_add_var_item(request, pk, var_pk, restaurant_pk, menu_pk, **kwargs):
@@ -82,8 +82,8 @@ def order_add_var_item(request, pk, var_pk, restaurant_pk, menu_pk, **kwargs):
                       f'<a href="/orders/cart/{order_slug}/" '
                       f'class="alert-link">Ver pedido</a>.')
 
-        return redirect(reverse('menu_display', kwargs={'pk': menu.pk,
-                                                        'slug': menu.slug}))
+        return redirect(reverse('restaurant_menu', kwargs={'restaurant_slug': restaurant.slug,
+                                                           'menu_slug': menu.slug}))
 
     else:
         item = OrderItem(order=order, item=product,
@@ -94,8 +94,8 @@ def order_add_var_item(request, pk, var_pk, restaurant_pk, menu_pk, **kwargs):
     messages.success(request, f'{item.item.name} adicionado ao pedido. '
                               f'<a href="/orders/cart/{order_slug}/" '
                               f'class="alert-link">Ver pedido</a>.')
-    return redirect(reverse('menu_display', kwargs={'pk': menu.pk,
-                                                    'slug': menu.slug}))
+    return redirect(reverse('restaurant_menu', kwargs={'restaurant_slug': restaurant.slug,
+                                                       'menu_slug': menu.slug}))
 
 
 def cart(request, slug):
