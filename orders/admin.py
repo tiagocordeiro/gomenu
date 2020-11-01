@@ -11,6 +11,7 @@ class OrderItemsInLine(admin.StackedInline):
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['status', 'customer', 'restaurant']
+    list_filter = ('restaurant', 'status')
     inlines = [OrderItemsInLine]
 
 

@@ -11,10 +11,12 @@ class ProductVariationInLine(admin.StackedInline):
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'restaurant')
+    list_filter = ('restaurant',)
 
 
 class VariationAdmin(admin.ModelAdmin):
     list_display = ('name', 'restaurant')
+    list_filter = ('restaurant',)
 
 
 class ProductAdmin(OrderableAdmin, admin.ModelAdmin):

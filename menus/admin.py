@@ -10,6 +10,7 @@ class MenuCategoryInLine(admin.StackedInline):
 
 class MenuAdmin(admin.ModelAdmin):
     list_display = ('name', 'restaurant')
+    list_filter = ('restaurant',)
     inlines = [
         MenuCategoryInLine,
     ]
