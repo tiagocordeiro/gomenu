@@ -32,10 +32,12 @@ def new_menu(request):
         messages.warning(request, "Você precisa cadastrar um restaurante")
         return redirect('new_restaurant')
 
+    categories = Category.objects.filter(restaurant__manager=request.user)
     menu_form = Menu()
     categories_menu_formset = inlineformset_factory(
         Menu, MenuCategory,
-        form=MenuCategoriesForm, extra=30, max_num=30
+        form=MenuCategoriesForm,
+        extra=len(categories), max_num=len(categories)
     )
     if request.method == 'POST':
         form = MenuForm(request.POST, instance=menu_form, prefix='main')
@@ -76,6 +78,7 @@ def new_menu(request):
 @login_required
 def update_menu(request, pk):
     menu = get_object_or_404(Menu, pk=pk)
+    categories = Category.objects.filter(restaurant__manager=request.user)
     if request.user.is_superuser or request.user == menu.restaurant.manager:
         pass
     else:
@@ -84,7 +87,8 @@ def update_menu(request, pk):
 
     menu_categories_formset = inlineformset_factory(Menu, MenuCategory,
                                                     form=MenuCategoriesForm,
-                                                    extra=30, max_num=30,
+                                                    extra=len(categories),
+                                                    max_num=len(categories),
                                                     can_delete=True)
 
     if request.method == 'POST':
