@@ -132,6 +132,16 @@
       color: #0b0e11;
     }
 
+    .whats-btn {
+      background: #26d9ac;
+      box-shadow: 0 2px 4px #11221e;
+      border: none;
+      border-radius: 3px;
+      padding: 0.5rem 1rem;
+      float: right;
+      color: #0b0e11;
+    }
+
     .promo {
       color: #3c3d29;
       background: #777a52;
@@ -206,7 +216,8 @@
 
   <section class="actions">
     <a class="back-btn" href="{% url 'cart' slug=order.slug %}">Voltar</a>
-    <button>Confirmar ✓</button>
+    <a class="whats-btn" href="https://api.whatsapp.com/send?phone=5511980374527&amp;text=Olá, segue o link para o meu pedido... https://gomenu.app.br{% url 'order_detail' slug=order.slug %}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Pedir via WhatsApp</a>
+{#    <button>Confirmar ✓</button>#}
   </section>
 
   <section class="cart">
