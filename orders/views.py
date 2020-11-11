@@ -100,6 +100,9 @@ def order_add_var_item(request, pk, var_pk, restaurant_pk, menu_pk, **kwargs):
 
 def cart(request, slug):
     order = Order.objects.get(slug=slug)
+    if order.status != "pending":
+        return redirect(reverse('order_detail', kwargs={'slug': slug}))
+
     order_items = OrderItem.objects.filter(order=order)
     order_total = 0
     for item in order_items:
@@ -144,6 +147,10 @@ def checkout(request, slug):
         subtotal = item.quantity * item.unity_price
         order_total = order_total + subtotal
         order_items_total = order_items_total + item.quantity
+
+    if order.status == "pending":
+        order.status = "on_hold"
+        order.save()
 
     context = {
         'order': order,
