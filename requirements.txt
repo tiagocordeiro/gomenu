@@ -19,7 +19,7 @@ wordpress-api==1.2.9
 django-s3-folder-storage==0.5
 
 # Sentry
-sentry-sdk==0.19.2
+sentry-sdk==0.19.3
 
 # Admin Order
 django-admin-ordering==0.13.1
