@@ -10,7 +10,7 @@ gunicorn==20.0.4
 Pillow==8.0.1
 
 # QRcodes
-django-qr-code==1.3.1
+django-qr-code==2.0.1
 
 # WP API
 wordpress-api==1.2.9
@@ -19,7 +19,7 @@ wordpress-api==1.2.9
 django-s3-folder-storage==0.5
 
 # Sentry
-sentry-sdk==0.19.2
+sentry-sdk==0.19.4
 
 # Admin Order
 django-admin-ordering==0.13.1
