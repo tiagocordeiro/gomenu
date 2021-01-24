@@ -10,7 +10,7 @@ gunicorn==20.0.4
 Pillow==8.0.1
 
 # QRcodes
-django-qr-code==2.0.1
+django-qr-code==2.1.0
 
 # WP API
 wordpress-api==1.2.9
