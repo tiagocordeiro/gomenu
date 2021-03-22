@@ -54,5 +54,5 @@ def menu_builder(pk):
             'itens': menu_itens,
             'restaurant_pk': menu.restaurant.pk,
             'online_sale': menu.restaurant.online_sales,
-            'variations_style': menu.variations_display_style,
+            'variations_style': str(menu.variations_display_style),
             'dark_mode': menu.dark_mode}
