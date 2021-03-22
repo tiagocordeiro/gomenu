@@ -7,7 +7,7 @@ from django.urls import reverse
 from menus.models import Menu
 from orders.forms import OrderItemsForm, OrderForm
 from orders.models import Order, OrderItem
-from products.models import Product, Variation
+from products.models import Product, ProductVariation
 from restaurants.models import Restaurant
 
 
@@ -55,7 +55,7 @@ def order_add_item(request, pk, restaurant_pk, menu_pk, **kwargs):
 
 def order_add_var_item(request, pk, var_pk, restaurant_pk, menu_pk, **kwargs):
     product = Product.objects.get(pk=pk)
-    variation = Variation.objects.get(pk=var_pk)
+    variation = ProductVariation.objects.get(pk=var_pk)
     menu = Menu.objects.get(pk=menu_pk)
     restaurant = Restaurant.objects.get(pk=restaurant_pk)
     if request.user.is_authenticated:
@@ -74,7 +74,7 @@ def order_add_var_item(request, pk, var_pk, restaurant_pk, menu_pk, **kwargs):
     if order.orderitem_set.all().filter(item=product,
                                         variation=variation).exists():
 
-        item = OrderItem.objects.get(order=order, item=product)
+        item = OrderItem.objects.get(order=order, item=product, variation=variation)
         item.quantity = item.quantity + 1
         item.save()
         messages.info(request,
@@ -86,9 +86,7 @@ def order_add_var_item(request, pk, var_pk, restaurant_pk, menu_pk, **kwargs):
                                                            'menu_slug': menu.slug}))
 
     else:
-        item = OrderItem(order=order, item=product,
-                         unity_price=product.productvariation_set.get(
-                             variation=variation).price, variation=variation)
+        item = OrderItem(order=order, item=product, unity_price=variation.price, variation=variation)
         item.save()
 
     messages.success(request, f'{item.item.name} adicionado ao pedido. '
@@ -151,6 +149,12 @@ def checkout(request, slug):
     if order.status == "pending":
         order.status = "on_hold"
         order.save()
+
+        restaurant = order.restaurant
+        order = Order(restaurant=restaurant)
+
+        order.save()
+        request.session["order_slug"] = order.slug
 
     context = {
         'order': order,

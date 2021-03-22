@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from core.models import Active, TimeStampedModel
-from products.models import Product, Variation
+from products.models import Product, ProductVariation
 from restaurants.models import Restaurant
 
 
@@ -48,7 +48,7 @@ class Order(Active, TimeStampedModel):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     item = models.ForeignKey(Product, on_delete=models.CASCADE)
-    variation = models.ForeignKey(Variation, on_delete=models.CASCADE,
+    variation = models.ForeignKey(ProductVariation, on_delete=models.CASCADE,
                                   blank=True, null=True)
     notes = models.TextField('observações', blank=True, null=True)
     quantity = models.PositiveIntegerField('Quantidade', default=1)

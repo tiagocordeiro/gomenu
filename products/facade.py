@@ -2,7 +2,7 @@ import re
 
 from wordpress import API
 
-from products.models import Category, Product, ProductVariation, Variation
+from products.models import Category, Product, ProductVariation
 
 
 def setup_wp_api(consumer_key, consumer_secret, woo_commerce_url):
@@ -100,7 +100,7 @@ def get_from_category(
                 try:
                     product_variation = ProductVariation.objects.get(
                         product__name=name,
-                        variation__name=variation_name,
+                        variation=variation_name,
                         product__restaurant=restaurant,
                     )
                     product_variation.price = variation_price
@@ -108,12 +108,9 @@ def get_from_category(
                     old_products_variations.append(product_variation)
                 except ProductVariation.DoesNotExist:
                     product_base = Product.objects.get(name=name, restaurant=restaurant)
-                    variation_base = Variation.objects.get(
-                        name=variation_name, restaurant=restaurant
-                    )
                     new_product_variation = ProductVariation(
                         product=product_base,
-                        variation=variation_base,
+                        variation=variation_name,
                         price=variation_price,
                     )
                     new_products_variations.append(new_product_variation)

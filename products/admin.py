@@ -1,7 +1,7 @@
 from admin_ordering.admin import OrderableAdmin
 from django.contrib import admin
 
-from .models import Product, Category, Variation, ProductVariation
+from .models import Product, Category, ProductVariation
 
 
 class ProductVariationInLine(admin.StackedInline):
@@ -40,4 +40,3 @@ class ProductAdmin(OrderableAdmin, admin.ModelAdmin):
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
-admin.site.register(Variation, VariationAdmin)

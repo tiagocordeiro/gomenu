@@ -35,30 +35,16 @@ class Product(TimeStampedModel, Active):
         verbose_name_plural = "Produtos"
 
 
-class Variation(TimeStampedModel, Active):
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    name = models.CharField("Variação", max_length=100)
-    description = models.TextField("Descrição", blank=True)
-
-    def __str__(self):
-        return str(self.name)
-
-    class Meta:
-        ordering = ("name",)
-        verbose_name = "Variação"
-        verbose_name_plural = "Variações"
-
-
 class ProductVariation(TimeStampedModel, Active):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    variation = models.ForeignKey(Variation, on_delete=models.CASCADE, null=True)
+    variation = models.CharField("Variação", max_length=100, null=True)
     price = models.DecimalField("Preço", max_digits=10, decimal_places=2)
 
     def __str__(self):
         return str(
             self.product.name
             + " - "
-            + self.variation.name
+            + self.variation
             + " - "
             + self.price.__str__()
         )
