@@ -5,9 +5,8 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from products.facade import get_product, get_from_category
-from products.forms import CategoryForm, ProductVariationForm, ProductForm, \
-    VariationForm
-from products.models import Category, Product, ProductVariation, Variation
+from products.forms import CategoryForm, ProductVariationForm, ProductForm
+from products.models import Category, Product, ProductVariation
 from restaurants.models import Restaurant, RestaurantIntegrations
 
 
@@ -69,9 +68,7 @@ def product_new(request):
     product_form = Product()
     variations_formset = inlineformset_factory(Product, ProductVariation,
                                                form=ProductVariationForm,
-                                               extra=3, max_num=3)
-
-    restaurnt_variations = Variation.objects.filter(restaurant=restaurant)
+                                               extra=1)
 
     if request.method == "POST":
         form = ProductForm(request.POST, instance=product_form, prefix='main')
@@ -80,9 +77,6 @@ def product_new(request):
 
         formset = variations_formset(request.POST, instance=product_form,
                                      prefix='product')
-
-        for formulario in formset:
-            formulario.fields['variation'].queryset = restaurnt_variations
 
         if form.is_valid() and formset.is_valid():
             novo_produto = form.save(commit=False)
@@ -99,9 +93,6 @@ def product_new(request):
             restaurant__manager=request.user)
         formset = variations_formset(instance=product_form, prefix='product')
 
-        for formulario in formset:
-            formulario.fields['variation'].queryset = restaurnt_variations
-
     return render(request, 'products/product_new.html', {'form': form,
                                                          'formset': formset})
 
@@ -109,8 +100,6 @@ def product_new(request):
 @login_required
 def product_update(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    restaurant = Restaurant.objects.get(manager=request.user)
-    restaurnt_variations = Variation.objects.filter(restaurant=restaurant)
 
     if request.user.is_superuser or request.user == product.restaurant.manager:
         pass
@@ -120,16 +109,12 @@ def product_update(request, pk):
 
     variations_formset = inlineformset_factory(Product, ProductVariation,
                                                form=ProductVariationForm,
-                                               extra=3, max_num=3)
+                                               extra=1)
 
     if request.method == 'POST':
         form = ProductForm(request.POST, instance=product, prefix='main')
         formset = variations_formset(request.POST, instance=product,
                                      prefix='product')
-
-        # TODO: Aplicar queryset no formset antes.
-        for formulario in formset:
-            formulario.fields['variation'].queryset = restaurnt_variations
 
         try:
             if form.is_valid() and formset.is_valid():
@@ -145,44 +130,8 @@ def product_update(request, pk):
         form = ProductForm(instance=product, prefix='main')
         formset = variations_formset(instance=product, prefix='product')
 
-        # TODO: Aplicar queryset no formset antes.
-        for formulario in formset:
-            formulario.fields['variation'].queryset = restaurnt_variations
-
     return render(request, 'products/product_update.html', {'form': form,
                                                             'formset': formset, })
-
-
-@login_required
-def variations_list(request):
-    variations = Variation.objects.all().filter(
-        restaurant__manager=request.user)
-    context = {'variations': variations}
-
-    return render(request, 'products/list_variations.html', context)
-
-
-@login_required
-def variation_new(request):
-    try:
-        restaurant = Restaurant.objects.get(manager=request.user)
-    except Restaurant.DoesNotExist:
-        messages.warning(request, "Você precisa cadastrar um restaurante")
-        return redirect('new_restaurant')
-
-    if request.method == "POST":
-        form = VariationForm(request.POST)
-        if form.is_valid():
-            variation = form.save(commit=False)
-            variation.restaurant = restaurant
-            variation.save()
-
-            messages.success(request, "Nova variação cadastrada.")
-            return redirect(variations_list)
-    else:
-        form = VariationForm()
-
-    return render(request, 'products/variation_new.html', {'form': form})
 
 
 @login_required
