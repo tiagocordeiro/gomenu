@@ -81,9 +81,19 @@
             {% csrf_token %}
 
             <div class="form-row">
-              <div class="form-group col-md-12">
+              <div class="form-group col-md-8">
                 <label for="id_name">Título</label>
                 {{ form.name }}
+              </div>
+              <div class="form-group col-md-2 m-auto">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    {{ form.dark_mode }} Dark Mode <i class="input-helper"></i></label>
+                </div>
+              </div>
+              <div class="form-group col-md-2">
+                <label for="id_main-variations_display_style">Estilo</label>
+                {{ form.variations_display_style }}
               </div>
             </div>
 
@@ -114,9 +124,9 @@
             <div class="row my-5">
               <div class="col-md-12" style="display: flex; justify-content: space-between;">
                 <a class="btn btn-warning" href="{% url 'menu_list' %}">Cancelar</a>
-{#                <button type="button" id="add-item" class="btn btn-primary">#}
-{#                  <i class="fa fa-plus"></i> Add Categoria#}
-{#                </button>#}
+                {#                <button type="button" id="add-item" class="btn btn-primary">#}
+                {#                  <i class="fa fa-plus"></i> Add Categoria#}
+                {#                </button>#}
 
                 <input type="submit" value="Salvar" class="btn btn-success">
               </div>

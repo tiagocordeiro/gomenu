@@ -53,4 +53,6 @@ def menu_builder(pk):
     return {'title': menu.name,
             'itens': menu_itens,
             'restaurant_pk': menu.restaurant.pk,
-            'online_sale': menu.restaurant.online_sales, }
+            'online_sale': menu.restaurant.online_sales,
+            'variations_style': menu.variations_display_style,
+            'dark_mode': menu.dark_mode}

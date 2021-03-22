@@ -1,0 +1,51 @@
+{% for item in category.itens %}
+  <div class="justify-content-between align-items-center food-menu-item">
+    {% if item.product.price|length >= 1 %}
+      <div class="row">
+        <div class='col-12'>
+          <h4 class="mt-2">{{ item.product.name }}</h4>
+          {% if item.product.description %}
+            <p class="item-description">{{ item.product.description }}</p>
+          {% endif %}
+        </div>
+      </div>
+      {% for variacao in item.product.price %}
+        <div class="row">
+          {% if online_sales == True %}
+            <a href="{% url 'order_add_var_item' pk=item.product.pk var_pk=variacao.variation_pk restaurant_pk=restaurant_pk menu_pk=menu_pk %}">
+              <span class="badge badge-warning mt-2 p-3">{{ variacao.variation_name }}:<hr>R$ {{ variacao.variation_price }}</span>
+            </a>
+          {% else %}
+            <div class='col-8'>
+              {#                <h5><span class="badge badge-warning mt-2 p-3">{{ variacao.variation_name }}</span></h5>#}
+              <p>{{ variacao.variation_name }}</p>
+            </div>
+            <div class="col-4">
+              {#                <h5><span class="badge badge-warning mt-2 p-3">R$ {{ variacao.variation_price }}</span></h5>#}
+              <p style="text-align: right;">R$ {{ variacao.variation_price }}</p>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="row">
+        <div class='col-lg-10 col-md-10 col-sm-12' style="margin: auto;">
+          <h4 class="mt-2">{{ item.product.name }}</h4>
+          {% if item.product.description %}
+            <p class="item-description">{{ item.product.description }}</p>
+          {% endif %}
+        </div>
+        <div class='col-lg-2 col-md-2 col-sm-12' style="margin: auto;">
+          {% if online_sales == True %}
+            <h5>
+              <a href="{% url 'order_add_item' pk=item.product.pk restaurant_pk=restaurant_pk menu_pk=menu_pk %}"><span class="badge badge-warning mt-2 p-3">R$ {{ item.product.price }}</span></a>
+            </h5>
+          {% else %}
+            {#            <h5 style="text-align: right;"><span class="badge badge-gradient-danger mt-2 p-3">R$ {{ item.product.price }}</span></h5>#}
+            <p class="m-auto" style="text-align: right;">R$ {{ item.product.price }}</p>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% endfor %}

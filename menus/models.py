@@ -8,12 +8,18 @@ from restaurants.models import Restaurant
 
 
 class Menu(TimeStampedModel, Active):
+    VARIATIONS_DISPLAY_STYLE_CHOICES = [
+        (1, 'Mini card'),
+        (2, 'List'),
+    ]
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     name = models.CharField('Nome', max_length=100)
     description = models.TextField('Descrição', blank=True)
     slug = models.SlugField(max_length=255, verbose_name="slug",
                             help_text="Preenchido automaticamente, não editar",
                             null=True, blank=True)
+    variations_display_style = models.IntegerField(choices=VARIATIONS_DISPLAY_STYLE_CHOICES, default=1)
+    dark_mode = models.BooleanField('Dark Mode', default=False)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

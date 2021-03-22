@@ -37,7 +37,7 @@ class Product(TimeStampedModel, Active):
 
 class Variation(TimeStampedModel, Active):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    name = models.CharField("Variação", max_length=50)
+    name = models.CharField("Variação", max_length=100)
     description = models.TextField("Descrição", blank=True)
 
     def __str__(self):

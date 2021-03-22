@@ -61,8 +61,8 @@
             {% for product in simple_products %}
               <tr>
                 <td>
-                  <p>{{ product.name }}</p>
-                  <p>{{ product.description|safe }}</p>
+                  <p style="white-space: break-spaces;">{{ product.name }}</p>
+                  <p style="white-space: break-spaces;">{{ product.description|safe }}</p>
                 </td>
                 <td> {{ product.category }} </td>
                 <td> R$ {{ product.price }}</td>
@@ -99,12 +99,13 @@
             {% for variacao in variacoes_list %}
               <tr>
                 <td>
-                  <p>{{ variacao.grouper }}<br>{{ variacao.grouper.description }}</p>
+                  <p style="white-space: break-spaces;">{{ variacao.grouper }}</p>
+                  <p style="white-space: break-spaces;">{{ variacao.grouper.description }}</p>
                 </td>
                 <td> {{ variacao.grouper.category }} </td>
                 <td>
                   {% for variacao in variacao.list %}
-                    {{ variacao.variation }}: R$ {{ variacao.price }}<br>
+                    <p style="white-space: break-spaces;">{{ variacao.variation }}:<br>R$ {{ variacao.price }}</p>
                   {% endfor %}
                 </td>
                 <td style="text-align: right;">
