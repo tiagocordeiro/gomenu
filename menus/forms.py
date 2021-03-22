@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, Textarea, Select, NumberInput
+from django.forms import ModelForm, TextInput, Textarea, Select, NumberInput, CheckboxInput
 
 from .models import Menu, MenuCategory
 
@@ -9,11 +9,15 @@ class MenuForm(ModelForm):
         fields = [
             'name',
             'description',
+            'variations_display_style',
+            'dark_mode',
         ]
 
         widgets = {
             'name': TextInput(attrs={'class': 'form-control'}),
-            'description': Textarea(attrs={'class': 'form-control'})
+            'description': Textarea(attrs={'class': 'form-control'}),
+            'variations_display_style': Select(attrs={'class': 'form-control'}),
+            'dark_mode': CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
 

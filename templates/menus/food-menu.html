@@ -63,13 +63,13 @@
           -webkit-print-color-adjust: exact;
       }
 
-      /* Dark Mode???
-      body {
-          background: #232323;
-          color: #cdcdcd;
-          font-family: "Avenir Next", "Avenir", sans-serif;
-      }
-      */
+      {% if dark_mode %}
+          body {
+              background: #232323;
+              color: #cdcdcd;
+              font-family: "Avenir Next", "Avenir", sans-serif;
+          }
+      {% endif %}
 
   </style>
 
@@ -100,7 +100,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </nav>
 
-
 <section class="container flex flex-wrap">
 
   <div class="row">
@@ -127,47 +126,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div>
         {{ category.description|safe }}
       </div>
-
-
-      {% for item in category.itens %}
-        <div class="row justify-content-between align-items-center food-menu-item">
-          <div class='col-lg-6 col-md-12'>
-            <h4 class="mt-2">{{ item.product.name }}</h4>
-            {% if item.product.description %}
-              <p class="item-description">{{ item.product.description }}</p>
-            {% endif %}
-          </div>
-          <div class="d-flex">
-            {% if item.product.price|length >= 1 %}
-              {% for variacao in item.product.price %}
+      {% if variations_style == '2' %}
+        {% include 'menus/extra/variations-list.html' %}
+      {% else %}
+        {% for item in category.itens %}
+          <div class="row justify-content-between align-items-center food-menu-item">
+            <div class='col-lg-6 col-md-12'>
+              <h4 class="mt-2">{{ item.product.name }}</h4>
+              {% if item.product.description %}
+                <p class="item-description">{{ item.product.description }}</p>
+              {% endif %}
+            </div>
+            <div class="d-flex">
+              {% if item.product.price|length >= 1 %}
+                {% for variacao in item.product.price %}
+                  <div class='col'>
+                    {% if online_sales == True %}
+                      <h5>
+                      <a href="{% url 'order_add_var_item' pk=item.product.pk var_pk=variacao.variation_pk restaurant_pk=restaurant_pk menu_pk=menu_pk %}">
+                        <span class="badge badge-warning mt-2 p-3">{{ variacao.variation_name }}:<hr>R$ {{ variacao.variation_price }}</span>
+                      </a>
+                    {% else %}
+                      <h5><span class="badge badge-warning mt-2 p-3">{{ variacao.variation_name }}:<hr>R$ {{ variacao.variation_price }}</span>
+                    {% endif %}
+                    </h5>
+                  </div>
+                {% endfor %}
+              {% else %}
                 <div class='col'>
                   {% if online_sales == True %}
                     <h5>
-                    <a href="{% url 'order_add_var_item' pk=item.product.pk var_pk=variacao.variation_pk restaurant_pk=restaurant_pk menu_pk=menu_pk %}">
-                      <span class="badge badge-warning mt-2 p-3">{{ variacao.variation_name }}:<hr>R$ {{ variacao.variation_price }}</span>
-                    </a>
+                      <a href="{% url 'order_add_item' pk=item.product.pk restaurant_pk=restaurant_pk menu_pk=menu_pk %}"><span class="badge badge-warning mt-2 p-3">R$ {{ item.product.price }}</span></a>
+                    </h5>
                   {% else %}
-                    <h5><span class="badge badge-warning mt-2 p-3">{{ variacao.variation_name }}:<hr>R$ {{ variacao.variation_price }}</span>
+                    <h5><span class="badge badge-warning mt-2 p-3">R$ {{ item.product.price }}</span></h5>
                   {% endif %}
-                  </h5>
                 </div>
-              {% endfor %}
-            {% else %}
-              <div class='col'>
-                {% if online_sales == True %}
-                  <h5>
-                    <a href="{% url 'order_add_item' pk=item.product.pk restaurant_pk=restaurant_pk menu_pk=menu_pk %}"><span class="badge badge-warning mt-2 p-3">R$ {{ item.product.price }}</span></a>
-                  </h5>
-                {% else %}
-                  <h5><span class="badge badge-warning mt-2 p-3">R$ {{ item.product.price }}</span></h5>
-                {% endif %}
-              </div>
-            {% endif %}
-
+              {% endif %}
+            </div>
           </div>
-        </div>
-      {% endfor %}
-
+        {% endfor %}
+      {% endif %}
     </div>
   {% endfor %}
 </section>

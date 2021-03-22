@@ -141,6 +141,8 @@ def menu_display(request, slug, pk):
         'menu_title': menu['title'],
         'menu': menu['itens'],
         'restaurant_pk': menu['restaurant_pk'],
+        'variations_style': menu['variations_style'],
+        'dark_mode': menu['dark_mode'],
         'menu_pk': pk,
         'online_sales': menu['online_sale'],
         'menu_object': menu_object,
