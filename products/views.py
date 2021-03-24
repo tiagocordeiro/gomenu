@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 
 from products.facade import get_product, get_from_category
 from products.forms import CategoryForm, ProductVariationForm, ProductForm
@@ -55,6 +56,32 @@ def products_list(request):
         'variation_products': variation_products,
     }
     return render(request, 'products/list_products.html', context=context)
+
+
+@login_required
+def products_sort(request):
+    products = Product.objects.all().order_by('order', 'category__name', 'name').filter(
+        restaurant__manager=request.user)
+
+    context = {'products': products}
+    return render(request, 'products/sort_products.html', context=context)
+
+
+@login_required
+@require_POST
+def save_new_ordering(request):
+    ordered_ids = request.POST["ordering"]
+    print(ordered_ids.split(","))
+
+    current_order = 10
+    for lookup_id in ordered_ids.split(","):
+        product = Product.objects.get(pk=lookup_id)
+        product.order = current_order
+        product.save()
+        current_order += 10
+
+    messages.success(request, "Ordem de produtos atualizada.")
+    return redirect('products_sort')
 
 
 @login_required

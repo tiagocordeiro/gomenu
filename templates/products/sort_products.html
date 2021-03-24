@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %} Produtos {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+  <!-- jsDelivr :: Sortable :: Latest (https://www.jsdelivr.com/package/npm/sortablejs) -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  <style>
+      .food-menu-item {
+          border-bottom-style: dotted;
+          border-color: gray;
+      }
+
+      .food-category-title {
+          border-bottom-style: dotted;
+          border-color: gray;
+      }
+  </style>
+{% endblock stylesheets %}
+
+{% block content %}
+  <div class="page-header">
+    <h3 class="page-title">Produtos</h3>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}"><i class="mdi mdi-home menu-icon"></i></a></li>
+        <li class="breadcrumb-item active" aria-current="page">produtos</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="row">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="col-12">
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message|safe }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+
+  <div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-description"> Listando todos os produtos <code>para ordenação</code></p>
+          <table class="table table-striped table-responsive-md">
+            <thead>
+            <tr>
+              <th> Produto</th>
+              <th> Categoria</th>
+              <th style="text-align: right;"> Ação</th>
+            </tr>
+            </thead>
+            <tbody id="products">
+            {% for product in products %}
+              <tr data-lookup="{{ product.pk }}">
+                <td> {{ product.name }} </td>
+                <td> {{ product.category }} </td>
+                <td style="text-align: right;">
+                  <a class="btn btn-gradient-primary btn-sm" href="{% url 'product_update' pk=product.pk %}" class="label"><i class="mdi mdi-lead-pencil"></i></a>
+                  <a class="btn btn-gradient-primary btn-sm" href="#" class="label"><i class="mdi mdi-eraser"></i></a>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+          <form id="orderingForm" method="post" action="{% url 'save-products-ordering' %}">
+            {% csrf_token %}
+            <input type="hidden" id="orderingInput" name="ordering">
+          </form>
+          <button id="saveOrdering" class="btn btn-outline-primary btn-lg float-right mr-2">Salvar ordem</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+  <script>
+      const products = document.getElementById('products');
+      let sortable = Sortable.create(products, {});
+
+      const saveOrderingButton = document.getElementById('saveOrdering');
+      const orderingForm = document.getElementById('orderingForm');
+      const formInput = orderingForm.querySelector('#orderingInput');
+
+      function saveOrdering() {
+          const rows = document.getElementById("products").querySelectorAll('tr');
+          let ids = [];
+          for (let row of rows) {
+              ids.push(row.dataset.lookup);
+          }
+          formInput.value = ids.join(',');
+          orderingForm.submit();
+      }
+
+      saveOrderingButton.addEventListener('click', saveOrdering);
+
+  </script>
+{% endblock javascripts %}

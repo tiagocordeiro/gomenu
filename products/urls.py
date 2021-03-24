@@ -6,6 +6,8 @@ urlpatterns = [
     path('', views.products_list, name="products_list"),
     path('new/', views.product_new, name="product_new"),
     path('update/<pk>/', views.product_update, name="product_update"),
+    path('sort/', views.products_sort, name="products_sort"),
+    path('save-products-ordering', views.save_new_ordering, name="save-products-ordering"),
     path('categories/', views.categories_list, name="categories_list"),
     path('category/new/', views.category_new, name="category_new"),
     path('import/woo/<product_id>/',
