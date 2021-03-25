@@ -1,4 +1,5 @@
 from django.db import models
+from django_summernote.fields import SummernoteTextField
 
 from core.models import TimeStampedModel, Active
 from restaurants.models import Restaurant
@@ -7,7 +8,7 @@ from restaurants.models import Restaurant
 class Category(TimeStampedModel, Active):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     name = models.CharField("Categoria", max_length=50)
-    description = models.TextField("Descrição", blank=True)
+    description = SummernoteTextField(blank=True)
 
     def __str__(self):
         return str(self.name)

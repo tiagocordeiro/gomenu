@@ -41,6 +41,27 @@ def category_new(request):
     return render(request, 'products/category_new.html', {'form': form})
 
 
+def category_update(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+
+        try:
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Categoria atualizada")
+                return redirect('category_update', pk=pk)
+        except Exception as e:
+            messages.warning(request,
+                             'Ocorreu um erro ao atualizar: {}'.format(e))
+
+    else:
+        form = CategoryForm(instance=category)
+
+    return render(request, 'products/category_update.html', {'form': form})
+
+
 @login_required
 def products_list(request):
     products = Product.objects.all().order_by('category__name', 'name').filter(
