@@ -74,6 +74,7 @@
           <form id="orderingForm" method="post" action="{% url 'save-products-ordering' %}">
             {% csrf_token %}
             <input type="hidden" id="orderingInput" name="ordering">
+            <input type="hidden" id="isCategoryFiltered" name="categoryfilter" value="{{ category }}">
           </form>
           <button id="saveOrdering" class="btn btn-outline-primary btn-lg float-right mr-2">Salvar ordem</button>
 

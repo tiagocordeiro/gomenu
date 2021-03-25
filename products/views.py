@@ -59,11 +59,16 @@ def products_list(request):
 
 
 @login_required
-def products_sort(request):
-    products = Product.objects.all().order_by('order', 'category__name', 'name').filter(
-        restaurant__manager=request.user)
+def products_sort(request, category=None):
+    if category is None:
+        products = Product.objects.all().order_by('order', 'category__name', 'name').filter(
+            restaurant__manager=request.user)
+    else:
+        products = Product.objects.all().order_by('order', 'category__name', 'name').filter(
+            restaurant__manager=request.user, category=category)
 
-    context = {'products': products}
+    context = {'products': products,
+               'category': category}
     return render(request, 'products/sort_products.html', context=context)
 
 
@@ -71,7 +76,11 @@ def products_sort(request):
 @require_POST
 def save_new_ordering(request):
     ordered_ids = request.POST["ordering"]
-    print(ordered_ids.split(","))
+    category = request.POST["categoryfilter"]
+
+    if len(ordered_ids) < 1:
+        messages.success(request, "Nenhum produto para atualizar")
+        return redirect('products_sort')
 
     current_order = 10
     for lookup_id in ordered_ids.split(","):
@@ -81,7 +90,10 @@ def save_new_ordering(request):
         current_order += 10
 
     messages.success(request, "Ordem de produtos atualizada.")
-    return redirect('products_sort')
+    if category == "None":
+        return redirect('products_sort')
+
+    return redirect('products_sort', category)
 
 
 @login_required

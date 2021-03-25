@@ -5,15 +5,15 @@
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}
   <style>
-    .food-menu-item {
-      border-bottom-style: dotted;
-      border-color: gray;
-    }
+      .food-menu-item {
+          border-bottom-style: dotted;
+          border-color: gray;
+      }
 
-    .food-category-title {
-      border-bottom-style: dotted;
-      border-color: gray;
-    }
+      .food-category-title {
+          border-bottom-style: dotted;
+          border-color: gray;
+      }
   </style>
 {% endblock stylesheets %}
 
@@ -55,15 +55,13 @@
               <div class="col-lg-3 flex-row d-flex">
                 <div class="col"></div>
                 <div class='col'>
-                  {% if category.product_set.count <= 1 %}
-                    <a class="btn btn-primary my-4" href="#" role="button">
+                  <a class="btn btn-primary my-4" href="{% url 'products_sort' category.pk %}" role="button">
+                    {% if category.product_set.count <= 1 %}
                       {{ category.product_set.count }} item
-                    </a>
-                  {% else %}
-                    <a class="btn btn-primary my-4" href="#" role="button">
+                    {% else %}
                       {{ category.product_set.count }} itens
-                    </a>
-                  {% endif %}
+                    {% endif %}
+                  </a>
                 </div>
               </div>
             </div>
