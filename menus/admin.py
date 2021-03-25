@@ -9,7 +9,7 @@ class MenuCategoryInLine(admin.StackedInline):
 
 
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ('name', 'restaurant')
+    list_display = ('name', 'slug', 'restaurant')
     list_filter = ('restaurant',)
     inlines = [
         MenuCategoryInLine,
