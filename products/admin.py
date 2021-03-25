@@ -1,3 +1,4 @@
+from django_summernote.admin import SummernoteModelAdmin
 from admin_ordering.admin import OrderableAdmin
 from django.contrib import admin
 
@@ -9,7 +10,8 @@ class ProductVariationInLine(admin.StackedInline):
     extra = 1
 
 
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(SummernoteModelAdmin):
+    summernote_fields = ('description',)
     list_display = ('name', 'restaurant')
     list_filter = ('restaurant',)
 

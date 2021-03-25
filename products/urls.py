@@ -11,6 +11,7 @@ urlpatterns = [
     path('save-products-ordering', views.save_new_ordering, name="save-products-ordering"),
     path('categories/', views.categories_list, name="categories_list"),
     path('category/new/', views.category_new, name="category_new"),
+    path('category/update/<pk>/', views.category_update, name="category_update"),
     path('import/woo/<product_id>/',
          views.import_from_woocommerce,
          name="import_from_woocommerce"),

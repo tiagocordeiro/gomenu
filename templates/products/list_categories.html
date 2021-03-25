@@ -1,21 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %} Page Blank {% endblock %}
+{% block title %} Categorias {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}
-  <style>
-      .food-menu-item {
-          border-bottom-style: dotted;
-          border-color: gray;
-      }
-
-      .food-category-title {
-          border-bottom-style: dotted;
-          border-color: gray;
-      }
-  </style>
-{% endblock stylesheets %}
+{% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
   <div class="page-header">
@@ -47,25 +35,31 @@
         <div class="card-body">
           <p class="card-description"> Listando todas as <code>categorias</code>
           </p>
-          {% for category in categories %}
-            <div class="row justify-content-between align-items-center food-menu-item">
-              <div class='col-lg-9'>
-                <h2 class='mt-2'>{{ category.name }}</h2>
-              </div>
-              <div class="col-lg-3 flex-row d-flex">
-                <div class="col"></div>
-                <div class='col'>
-                  <a class="btn btn-primary my-4" href="{% url 'products_sort' category.pk %}" role="button">
+          <table class="table table-striped table-responsive-md">
+            <thead>
+            <tr>
+              <td>Categoria</td>
+              <td style="text-align: right;">Ação</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for category in categories %}
+              <tr>
+                <td>{{ category.name }}</td>
+                <td style="text-align: right;">
+                  <a class="btn btn-primary btn-sm" href="{% url 'products_sort' category.pk %}" role="button">
                     {% if category.product_set.count <= 1 %}
                       {{ category.product_set.count }} item
                     {% else %}
                       {{ category.product_set.count }} itens
                     {% endif %}
                   </a>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
+                  <a class="btn btn-gradient-primary btn-sm" href="{% url 'category_update' pk=category.pk %}" class="label"><i class="mdi mdi-lead-pencil"></i></a>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
