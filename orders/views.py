@@ -186,7 +186,8 @@ def orders_list(request):
             pass
 
     else:
-        orders = Order.objects.all().filter(restaurant__manager=request.user).order_by('-modified').exclude(status="pending")
+        orders = Order.objects.all().filter(restaurant__manager=request.user).order_by('-modified').exclude(
+            status="pending")
 
     return render(request, template, {'orders': orders, 'order_slug': order_slug, 'cart_items': cart_items})
 
