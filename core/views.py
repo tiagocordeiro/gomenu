@@ -5,7 +5,8 @@ from django.shortcuts import render, redirect
 
 from core.facade import get_dashboard_data_summary
 from core.forms import ProfileForm, SignUpForm
-from core.models import UserProfile
+from core.models import UserProfile, Customer
+from orders.models import Order
 
 
 def index(request):
@@ -14,12 +15,24 @@ def index(request):
 
 @login_required
 def dashboard(request):
+    cart_items = 0
+    order_slug = False
     dashboard_data = get_dashboard_data_summary(request.user)
+
+    if request.user.groups.filter(name="Customer").exists():
+        try:
+            order_slug = request.session["order_slug"]
+            order = Order.objects.get(slug=order_slug)
+            cart_items = len(order.orderitem_set.all())
+        except KeyError:
+            pass
 
     context = {
         'total_products': dashboard_data['total_products'],
         'total_categories': dashboard_data['total_categories'],
         'total_menus': dashboard_data['total_menus'],
+        'order_slug': order_slug,
+        'cart_items': cart_items,
     }
     return render(request, 'core/dashboard.html', context=context)
 
@@ -59,10 +72,12 @@ def sign_up(request):
             form.save()
             username = form.cleaned_data.get('username')
             user = User.objects.get(username=username)
-            group = Group.objects.get_or_create(name="Restaurant Manager")
+            group = Group.objects.get(name="Customer")
             user.groups.add(group)
+            customer = Customer(user=user, address=form.cleaned_data.get('address'),
+                                phone=form.cleaned_data.get('phone'))
+            customer.save()
             return redirect('dashboard')
     else:
         form = SignUpForm()
-    return render(request, 'registration/signup.html',
-                  {'form': form})
+    return render(request, 'registration/signup.html', {'form': form})

@@ -13,6 +13,10 @@ from restaurants.models import Restaurant, RestaurantIntegrations
 
 @login_required
 def categories_list(request):
+    if request.user.groups.filter(name="Customer").exists():
+        messages.warning(request, "Você não pode acessar essa página")
+        return redirect('orders_list')
+
     categories = Category.objects.filter(restaurant__manager=request.user)
     context = {'categories': categories}
 
@@ -21,6 +25,10 @@ def categories_list(request):
 
 @login_required
 def category_new(request):
+    if request.user.groups.filter(name="Customer").exists():
+        messages.warning(request, "Você não pode acessar essa página")
+        return redirect('orders_list')
+
     try:
         restaurant = Restaurant.objects.get(manager=request.user)
     except Restaurant.DoesNotExist:
@@ -44,6 +52,12 @@ def category_new(request):
 def category_update(request, pk):
     category = get_object_or_404(Category, pk=pk)
 
+    if request.user.is_superuser or request.user == category.restaurant.manager:
+        pass
+    else:
+        messages.warning(request, "Você não tem permissão.")
+        return redirect('dashboard')
+
     if request.method == 'POST':
         form = CategoryForm(request.POST, instance=category)
 
@@ -64,6 +78,10 @@ def category_update(request, pk):
 
 @login_required
 def products_list(request):
+    if request.user.groups.filter(name="Customer").exists():
+        messages.warning(request, "Você não pode acessar essa página")
+        return redirect('orders_list')
+
     products = Product.objects.all().order_by('category__name', 'name').filter(
         restaurant__manager=request.user)
 
@@ -119,6 +137,10 @@ def save_new_ordering(request):
 
 @login_required
 def product_new(request):
+    if request.user.groups.filter(name="Customer").exists():
+        messages.warning(request, "Você não pode acessar essa página")
+        return redirect('orders_list')
+
     try:
         restaurant = Restaurant.objects.get(manager=request.user)
     except Restaurant.DoesNotExist:
@@ -196,6 +218,10 @@ def product_update(request, pk):
 
 @login_required
 def import_from_woocommerce(request, product_id):
+    if request.user.groups.filter(name="Customer").exists():
+        messages.warning(request, "Você não pode acessar essa página")
+        return redirect('orders_list')
+
     try:
         restaurant = Restaurant.objects.get(manager=request.user)
     except Restaurant.DoesNotExist:
@@ -220,6 +246,10 @@ def import_from_woocommerce(request, product_id):
 
 @login_required
 def import_all_from_woocommerce_category(request, category_id):
+    if request.user.groups.filter(name="Customer").exists():
+        messages.warning(request, "Você não pode acessar essa página")
+        return redirect('orders_list')
+
     try:
         restaurant = Restaurant.objects.get(manager=request.user)
     except Restaurant.DoesNotExist:

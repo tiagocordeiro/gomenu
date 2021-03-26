@@ -26,13 +26,10 @@ class ProfileForm(ModelForm):
 
 
 class SignUpForm(UserCreationForm):
-    first_name = CharField(max_length=30, required=False,
-                           help_text='Optional.')
-    last_name = CharField(max_length=30, required=False, help_text='Optional.')
-    email = EmailField(max_length=254,
-                       help_text='Required. Inform a valid email address.')
+    email = EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+    phone = CharField(max_length=20)
+    address = CharField(max_length=100)
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1',
-                  'password2',)
+        fields = ('username', 'email', 'password1', 'password2', 'phone', 'address')

@@ -40,7 +40,6 @@
             <table class="table">
               <thead>
               <tr>
-                <th> Cliente</th>
                 <th> Restaurante</th>
                 <th class="text-center"> Status</th>
                 <th class="text-right"> Criação</th>
@@ -51,27 +50,23 @@
               <tbody>
               {% for order in orders %}
                 <tr>
-                  <td>{{ order.customer }}</td>
-                  <td> <a href="{% url 'restaurant_main' slug=order.restaurant.slug %}">{{ order.restaurant }}</a></td>
+                  <td><a href="{% url 'restaurant_main' slug=order.restaurant.slug %}">{{ order.restaurant }}</a></td>
                   {% if order.status == 'pending' %}
-                    <td class="text-center"><label class="badge badge-gradient-info">{{ order.status|upper }}</label></td>
-                  {% elif order.status == 'on_hold' %}
-                    <td class="text-center"><label class="badge badge-gradient-warning">AGUARDANDO</label></td>
+                    <td class="text-center"><label class="badge badge-gradient-warning">PENDENTE</label></td>
                   {% elif order.status == 'processing' %}
-                    <td class="text-center"><label class="badge badge-gradient-warning">PROCESSANDO</label></td>
+                    <td class="text-center"><label class="badge badge-gradient-info">{{ order.status|upper }}</label>
+                    </td>
                   {% elif order.status == 'complete' %}
-                    <td class="text-center"><label class="badge badge-gradient-success">{{ order.status|upper }}</label></td>
+                    <td class="text-center"><label class="badge badge-gradient-success">{{ order.status|upper }}</label>
+                    </td>
                   {% else %}
                     <td class="text-center">{{ order.status }}</td>
                   {% endif %}
                   <td class="text-right">{{ order.created }}</td>
                   <td class="text-right">{{ order.modified }}</td>
                   <td class="text-right">
-                    <div class="btn-group" role="group" aria-label="Menu options">
-                    <a class="btn btn-primary text-light btn-sm" href="{% url 'order_detail' slug=order.slug %}"><i class="mdi mdi-link-variant"></i></a>
-                    <a class="btn btn-primary text-light btn-sm" href="#" class="label"><i class="mdi mdi-bell-ring-outline"></i></a>
-                    <a class="btn btn-primary text-light btn-sm" href="#" class="label"><i class="mdi mdi-cellphone"></i></a>
-                  </div>
+                    <a class="btn btn-primary text-light btn-sm" href="{% url 'order_detail' slug=order.slug %}"><i class="mdi mdi-link-variant"></i>
+                      Ver pedido</a>
                   </td>
                 </tr>
               {% endfor %}

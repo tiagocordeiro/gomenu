@@ -211,12 +211,12 @@
 
   <section class="summary">
     <div class="items">🛒 {{ order_items_total }} items</div>
-    <div class="total">R$ {{ order.order_total }}</div>
+    <div class="total">R$ {{ order_total|currency_display }}</div>
   </section>
 
   <section class="actions">
-{#    <a class="back-btn" href="{% url 'cart' slug=order.slug %}">Voltar</a>#}
-    <a class="whats-btn" href="https://api.whatsapp.com/send?phone=5511980374527&amp;text=Olá, segue o link para o meu pedido... https://gomenu.app.br{% url 'order_detail' slug=order.slug %}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Avisar restaurante</a>
+    <a class="back-btn" href="{% url 'order_detail' slug=order.slug %}">Acompanhar pedido</a>
+    <a class="whats-btn" href="https://api.whatsapp.com/send?phone={{ order.restaurant.phone }}&amp;text=Olá, segue o link para o meu pedido... https://gomenu.app.br{% url 'order_detail' slug=order.slug %}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Falar com o restaurante</a>
   </section>
 
   <section class="cart">

@@ -35,59 +35,71 @@
             <div>
               <span class="mb-0 text-muted">
                 {% if form.username.errors %}
-                                <div class="alert alert-danger" role="alert">
-                                    {% for error in form.username.errors %}
-                                      {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
+                  <div class="alert alert-danger" role="alert">
+                    {% for error in form.username.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
 
-                            {% if form.email.errors %}
-                                <div class="alert alert-danger" role="alert">
-                                    {% for error in form.email.errors %}
-                                      {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
+                {% if form.email.errors %}
+                  <div class="alert alert-danger" role="alert">
+                    {% for error in form.email.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
 
-                            {% if form.password1.errors %}
-                                <div class="alert alert-danger" role="alert">
-                                    {% for error in form.password1.errors %}
-                                      {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
+                {% if form.password1.errors %}
+                  <div class="alert alert-danger" role="alert">
+                    {% for error in form.password1.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
 
-                            {% if form.password2.errors %}
-                                <div class="alert alert-danger" role="alert">
-                                    {% for error in form.password2.errors %}
-                                      {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
+                {% if form.password2.errors %}
+                  <div class="alert alert-danger" role="alert">
+                    {% for error in form.password2.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
 
 
-                            <h2 class="h2">Já possui um conta?</h2>
-                            <p>Acesse o sistema.</p>
-                            <a href="{% url 'login' %}" class="btn btn-rounded">Acessar</a>
+                <h2 class="h2">Já possui um conta?</h2>
+                <p>Acesse o sistema. <a href="{% url 'login' %}" class="btn btn-rounded">Entrar</a></p>
+
             </span>
             </div>
-            <h4>Hello! let's get started</h4>
-            <h6 class="font-weight-light">Sign in to continue.</h6>
+            <h4>Ou,</h4>
+            <h6 class="font-weight-light">Cadastre-se para continuar.</h6>
             <form method="post" action="" class="pt-3">
               {% csrf_token %}
               <div class="form-group">
-                <input type="text" name="username" autofocus="" maxlength="254" placeholder="Username" class="form-control" autocomplete="off" required="" id="id_username">
+                <input type="text" name="username" autofocus="" maxlength="254" placeholder="Nome de usuário" class="form-control" autocomplete="off" required="" id="id_username">
               </div>
               <div class="form-group">
-                <input type="password" name="password" placeholder="Password" class="form-control" autocomplete="off" required="" id="id_password">
+                <input type="email" name="email" placeholder="E-mail" class="form-control" autocomplete="off" maxlength="254" required="" id="id_email">
+              </div>
+              <div class="form-group">
+                <input type="text" name="phone" placeholder="Telefone com DDD" class="form-control" maxlength="20" required="" id="id_phone">
+              </div>
+              <div class="form-group">
+                <input type="text" name="address" placeholder="Endereço" class="form-control" maxlength="100" required="" id="id_address">
+              </div>
+              <div class="form-group">
+                <input type="password" name="password1" placeholder="Senha" class="form-control" autocomplete="new-password" required="" id="id_password1">
+              </div>
+              <div class="form-group">
+                <input type="password" name="password2" placeholder="repita a mesma senha" class="form-control" autocomplete="new-password" required="" id="id_password2">
               </div>
 
               <input type="hidden" name="next" value="{{ next }}"/>
 
               <div class="mt-3">
-                <button type="submit" name="login" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">
-                  Login
+                <button type="submit" name="signup" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">
+                  Cadastrar
                 </button>
               </div>
               <div class="my-2 d-flex justify-content-between align-items-center">
@@ -95,7 +107,7 @@
                   <label class="form-check-label text-muted">
                     <input type="checkbox" class="form-check-input"> Mantenha-me conectado </label>
                 </div>
-                <a href="{% url 'password_reset' %}" class="auth-link text-black">Esqueceu a senha?</a>
+{#                <a href="{% url 'password_reset' %}" class="auth-link text-black">Esqueceu a senha?</a>#}
               </div>
               <div class="text-center mt-4 font-weight-light">
                 &copy; <a href="{% url 'index' %}">goMenu</a>.
