@@ -136,11 +136,13 @@ def cart(request, slug):
                                                 'formset': formset, })
 
 
+@login_required
 def checkout(request, slug):
     order = Order.objects.get(slug=slug)
     order_items = OrderItem.objects.filter(order=order)
     order_total = 0
     order_items_total = 0
+    order.customer = request.user
     for item in order_items:
         subtotal = item.quantity * item.unity_price
         order_total = order_total + subtotal
@@ -167,12 +169,26 @@ def checkout(request, slug):
 
 @login_required
 def orders_list(request):
+    template = 'orders/list.html'
+    cart_items = 0
+    order_slug = False
     if request.user.is_superuser:
-        orders = Order.objects.all()
-    else:
-        orders = Order.objects.all().filter(restaurant__manager=request.user)
+        orders = Order.objects.all().order_by('-modified').exclude(status="pending")
+    elif request.user.groups.filter(name="Customer").exists():
+        template = 'orders/my_orders.html'
+        orders = Order.objects.all().filter(customer=request.user).order_by('-modified').exclude(status="pending")
 
-    return render(request, 'orders/list.html', {'orders': orders})
+        try:
+            order_slug = request.session["order_slug"]
+            order = Order.objects.get(slug=order_slug)
+            cart_items = len(order.orderitem_set.all())
+        except KeyError:
+            pass
+
+    else:
+        orders = Order.objects.all().filter(restaurant__manager=request.user).order_by('-modified').exclude(status="pending")
+
+    return render(request, template, {'orders': orders, 'order_slug': order_slug, 'cart_items': cart_items})
 
 
 def order_detail(request, slug):

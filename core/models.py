@@ -34,6 +34,16 @@ class UserProfile(models.Model):
         verbose_name_plural = 'Profiles'
 
 
+class Customer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    address = models.CharField('Endereço', max_length=100)
+    phone = models.CharField('Telefone', max_length=20)
+
+    class Meta:
+        verbose_name = 'Cliente'
+        verbose_name_plural = 'Clientes'
+
+
 class Company(models.Model):
     name = models.CharField('Nome', max_length=50)
     address = models.CharField('Endereço', max_length=100)

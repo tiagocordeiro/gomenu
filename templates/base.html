@@ -1,3 +1,4 @@
+{% load core_extras %}
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -47,7 +48,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="container-fluid page-body-wrapper">
     <!-- partial: sidebar -->
-    {% include 'includes/sidebar.html' %}
+    {% if request.user|has_group:"Customer" %}
+      {% include 'includes/sidebar_customer.html' %}
+    {% else %}
+      {% include 'includes/sidebar.html' %}
+    {% endif %}
 
     <div class="main-panel">
       <!-- content-wrapper -->

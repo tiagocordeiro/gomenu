@@ -26,6 +26,10 @@ def menu_list(request):
 
 @login_required
 def new_menu(request):
+    if request.user.groups.filter(name="Customer").exists():
+        messages.warning(request, "Você não pode acessar essa página")
+        return redirect('orders_list')
+
     try:
         restaurant = Restaurant.objects.get(manager=request.user)
     except Restaurant.DoesNotExist:

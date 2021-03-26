@@ -1,0 +1,55 @@
+{% load static %}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+    {% if request.user.is_authenticated %}
+      <li class="nav-item nav-profile">
+        <a href="#" class="nav-link">
+          <div class="nav-profile-image">
+            <img src="{% static 'assets/images/faces/face1.jpg' %}" alt="profile">
+            <span class="login-status online"></span>
+            <!--change to offline or busy as needed-->
+          </div>
+          <div class="nav-profile-text d-flex flex-column">
+            <span class="font-weight-bold mb-2">{{ user }}</span>
+            <span class="text-secondary text-small">{{ user.first_name }}</span>
+          </div>
+          <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'orders_list' %}">
+          <span class="menu-title">Meus pedidos</span>
+          <i class="mdi mdi-file-multiple menu-icon"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">
+          <span class="menu-title">Sair</span>
+          <i class="mdi mdi-exit-to-app menu-icon"></i>
+        </a>
+      </li>
+    {% else %}
+      <li class="nav-item nav-profile">
+        <a href="#" class="nav-link">
+          <div class="nav-profile-image">
+            <img src="{% static 'assets/images/faces-clipart/pic-3.png' %}" alt="profile">
+            <span class="login-status online"></span>
+            <!--change to offline or busy as needed-->
+          </div>
+          <div class="nav-profile-text d-flex flex-column">
+            <span class="font-weight-bold mb-2">Olá Visitante</span>
+            <span class="text-secondary text-small">Anônimo</span>
+          </div>
+          <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'login' %}">
+          <span class="menu-title">Acessar</span>
+          <i class="mdi mdi-login menu-icon"></i>
+        </a>
+      </li>
+    {% endif %}
+
+  </ul>
+</nav>

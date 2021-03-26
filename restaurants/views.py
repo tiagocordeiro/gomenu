@@ -13,6 +13,10 @@ from restaurants.models import Restaurant
 
 @login_required
 def new_restaurant(request):
+    if request.user.groups.filter(name="Customer").exists():
+        messages.warning(request, "Você não pode acessar essa página")
+        return redirect('orders_list')
+
     try:
         restaurant = Restaurant.objects.filter(manager=request.user)
         if restaurant:
