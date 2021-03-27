@@ -3,7 +3,13 @@
 {% block title %} Novo Produto {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+  <style>
+      select.form-control {
+          color: #495057;
+      }
+  </style>
+{% endblock stylesheets %}
 
 {% block content %}
   <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>

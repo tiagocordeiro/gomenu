@@ -5,10 +5,12 @@ from django.urls import reverse
 from .admin import CompanyAdmin
 from .facade import get_dashboard_data_summary
 from .models import Company
-from .views import index
 
 
 # Create your tests here.
+from .templatetags.core_extras import has_group
+
+
 class IndexViewTest(TestCase):
     def setUp(self):
         # Every test needs access to the request factory.
@@ -34,11 +36,45 @@ class IndexViewTest(TestCase):
                                                         email='master@…',
                                                         password='top_secret')
 
-    def test_index_page_status_code_is_ok(self):
-        request = self.factory.get('/')
+        # Customer user
+        self.customer_user = User.objects.create_user(username='customer',
+                                                      email='customer@…',
+                                                      password='secret')
+        self.customer_group = Group.objects.create(name="Customer")
+        self.customer_group.user_set.add(self.customer_user)
 
-        response = index(request)
-        self.assertEqual(response.status_code, 200)
+    def test_index_page_status_code_is_ok_with_noon_logged_user(self):
+        self.client.logout()
+        request = self.client.get(reverse('index'))
+
+        self.assertEqual(request.status_code, 200)
+
+    def test_index_page_status_code_is_302_with_logged_user(self):
+        self.client.force_login(self.staff_user)
+        request = self.client.get(reverse('index'))
+
+        self.assertEqual(request.status_code, 302)
+        self.assertRedirects(request,
+                             '/dashboard/',
+                             status_code=302,
+                             target_status_code=200)
+
+    def test_index_page_status_code_with_customer_logged_user(self):
+        self.client.force_login(self.customer_user)
+        request = self.client.get(reverse('index'))
+
+        self.assertEqual(request.status_code, 302)
+        self.assertRedirects(request,
+                             '/dashboard/',
+                             status_code=302,
+                             target_status_code=200)
+
+    def test_dashboard_page_content_with_customer_logged_user(self):
+        self.client.force_login(self.customer_user)
+        request = self.client.get(reverse('dashboard'))
+
+        self.assertEqual(request.status_code, 200)
+        self.assertContains(request, 'Cupons')
 
     def test_company_name_return_str(self):
         company = Company.objects.get(name=self.company.name)
@@ -78,3 +114,7 @@ class IndexViewTest(TestCase):
     def test_get_dashboardcontext_facade(self):
         context = get_dashboard_data_summary(self.super_user)
         self.assertIn('total_products', context)
+
+    def test_has_group_filter_attribut_error(self):
+        context = has_group('satringqq', 'Customer')
+        self.assertEqual(False, context)

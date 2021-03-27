@@ -10,6 +10,9 @@ from orders.models import Order
 
 
 def index(request):
+    if request.user.is_authenticated:
+        return redirect(dashboard)
+
     return render(request, 'index.html')
 
 
@@ -31,6 +34,7 @@ def dashboard(request):
         'total_products': dashboard_data['total_products'],
         'total_categories': dashboard_data['total_categories'],
         'total_menus': dashboard_data['total_menus'],
+        'total_pedidos': dashboard_data['total_pedidos'],
         'order_slug': order_slug,
         'cart_items': cart_items,
     }
