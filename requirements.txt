@@ -1,5 +1,5 @@
 # Django
-Django==3.2.4
+Django==3.2.7
 python-decouple==3.4
 
 # Heroku
