@@ -25,4 +25,4 @@ sentry-sdk==1.4.3
 django-admin-ordering==0.14.1
 
 # Code Editor
-django-summernote==0.8.11.6
+django-summernote==0.8.20.0
