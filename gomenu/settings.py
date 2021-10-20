@@ -201,6 +201,26 @@ if AWS_ACCESS_KEY_ID:  # pragma: no cover
 
 # -----------------------------------------------------------------------------
 
+# Cloudinary
+CLOUDINARY_URL = config('CLOUDINARY_URL', default=False)
+
+if CLOUDINARY_URL:  # pragma: no cover
+    if AWS_ACCESS_KEY_ID:
+        # Usa Cloudinary apenas quando AWS não foi configurado
+        pass
+    else:
+        INSTALLED_APPS.remove('django.contrib.staticfiles')
+        INSTALLED_APPS = [
+            'cloudinary_storage',
+            'django.contrib.staticfiles',
+            'cloudinary',
+        ] + INSTALLED_APPS
+
+        COLLECTFAST_ENABLED = False
+
+        DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
+        STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticCloudinaryStorage'
+
 SUMMERNOTE_CONFIG = {
     # Using SummernoteWidget - iframe mode, default
     'iframe': True,
