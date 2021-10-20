@@ -18,6 +18,9 @@ wordpress-api==1.2.9
 # AWS Storage
 django-s3-folder-storage==0.5
 
+# Cloudinary
+dj3-cloudinary-storage==0.0.6
+
 # Sentry
 sentry-sdk==1.4.3
 
