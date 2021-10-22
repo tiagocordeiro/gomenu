@@ -67,6 +67,16 @@ python manage.py runserver
 docker-compose up -d
 ```
 
+### Como fazer deploy na Heroku
+Nesse vídeo é demonstrado como fazer o deploy na Heroku utilizando:
+
+* `Cloudinary` para os arquivos estáticos e de mídia.
+* `Sentry` para monitorar bugs e erros na aplicação.
+
+[![Veja no youtube](https://img.youtube.com/vi/l5bmooWfrKM/0.jpg)](https://www.youtube.com/watch?v=l5bmooWfrKM)
+
+[Abrir no YouTube](https://www.youtube.com/watch?v=l5bmooWfrKM "Abrir no YouTube")
+
 ### Thanx
 - [[ ~ PurpleAdmin Free Admin Template ~ ]](https://github.com/BootstrapDash/PurpleAdmin-Free-Admin-Template)
 - [[ ~ Dependencies scanned by PyUp.io ~ ]](https://pyup.io/)
