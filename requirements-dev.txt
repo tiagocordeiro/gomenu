@@ -3,6 +3,6 @@ ipython==7.28.0
 pytest-django==4.4.0
 coverage==6.0.2
 flake8==4.0.1
-django-debug-toolbar==3.2.2
+django-debug-toolbar==3.2.4
 
 -r requirements.txt
