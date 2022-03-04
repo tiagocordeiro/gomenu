@@ -73,9 +73,9 @@ Nesse vídeo é demonstrado como fazer o deploy na Heroku utilizando:
 * `Cloudinary` para os arquivos estáticos e de mídia.
 * `Sentry` para monitorar bugs e erros na aplicação.
 
-[![Veja no youtube](https://img.youtube.com/vi/l5bmooWfrKM/0.jpg)](https://www.youtube.com/watch?v=l5bmooWfrKM)
+[![Veja no youtube](https://img.youtube.com/vi/kDIaaqyIWU4/0.jpg)](https://www.youtube.com/watch?v=l5bmooWfrKM)
 
-[Abrir no YouTube](https://www.youtube.com/watch?v=l5bmooWfrKM "Abrir no YouTube")
+[Abrir no YouTube](https://www.youtube.com/watch?v=kDIaaqyIWU4 "Abrir no YouTube")
 
 ### Thanx
 - [[ ~ PurpleAdmin Free Admin Template ~ ]](https://github.com/BootstrapDash/PurpleAdmin-Free-Admin-Template)
