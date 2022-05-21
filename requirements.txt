@@ -30,4 +30,4 @@ django-admin-ordering==0.15.0
 # Code Editor
 django-summernote==0.8.20.0
 # Forcing the previous bleach version with summernote
-bleach==4.1.0
+bleach==5.0.0
