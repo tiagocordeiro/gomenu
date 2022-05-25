@@ -78,6 +78,12 @@ def my_restaurant(request):
 
 def restaurant_main(request, slug):
     restaurant = get_object_or_404(Restaurant, slug=slug)
+    if restaurant.manager.is_active:
+        pass
+    else:
+        messages.warning(request, 'Restaurante não encontrado')
+        return render(request, 'menus/food-menu.html')
+
     menu_object = restaurant.menu_set.first()
     menu = menu_builder(pk=menu_object.pk)
     menu_url = reverse('restaurant_main', kwargs={'slug': slug})

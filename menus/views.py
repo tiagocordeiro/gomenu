@@ -132,6 +132,12 @@ def menu_display(request, slug, pk):
     menu_object = get_object_or_404(Menu, slug=slug, pk=pk)
     menu = menu_builder(pk=menu_object.pk)
     restaurant = menu_object.restaurant
+    if restaurant.manager.is_active:
+        pass
+    else:
+        messages.warning(request, 'Cardápio não disponível')
+        return render(request, 'menus/food-menu.html')
+
     menu_url = reverse('menu_display', kwargs={'slug': slug, 'pk': pk})
     menu_complete_url = ''.join(
         ['https://', get_current_site(request).domain, menu_url])
