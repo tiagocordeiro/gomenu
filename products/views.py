@@ -217,6 +217,24 @@ def product_update(request, pk):
 
 
 @login_required
+def product_delete(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+
+    if request.user.is_superuser or request.user == product.restaurant.manager:
+        pass
+    else:
+        messages.warning(request, "Você não tem permissão.")
+        return redirect('products_list')
+
+    if request.method == 'POST':
+        product.delete()
+        messages.success(request, "Produto excluido")
+        return redirect('products_list')
+
+    return render(request, 'products/product_delete.html', {'product': product})
+
+
+@login_required
 def import_from_woocommerce(request, product_id):
     if request.user.groups.filter(name="Customer").exists():
         messages.warning(request, "Você não pode acessar essa página")

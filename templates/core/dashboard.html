@@ -20,6 +20,21 @@
       </ul>
     </nav>
   </div>
+  {% if messages %}
+  <div class="row">
+    {% for message in messages %}
+      <div class="col-12">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ message|safe }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
   {% if request.user|has_group:"Customer" %}
     {% include 'core/dashboard_customer.html' %}
   {% else %}
