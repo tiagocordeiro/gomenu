@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %} Novo Produto {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+  <style>
+      select.form-control {
+          color: #495057;
+      }
+  </style>
+{% endblock stylesheets %}
+
+{% block content %}
+  <div class="page-header">
+    <h3 class="page-title">Excluir Produto</h3>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'products_list' %}">Produtos</a></li>
+        <li class="breadcrumb-item active" aria-current="page">deletar</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="row">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="col-12">
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message|safe }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    {% if form.errors %}
+      <div class="col-12">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {% for erro in form.errors %}
+            {{ erro }}
+          {% endfor %}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+
+          <div class="card">
+            <div class="card-body">
+              <p class="text-center"><i class="mdi mdi-trash-can icon-lg text-danger"></i></p>
+              <h4 class="card-title text-center">Atenção!</h4>
+                  <p style="line-height: 1.8em;" class="card-text text-center">Você está prestes a deletar <br>
+                    <strong>{{ product.name }}</strong> <br>
+                    categoria: <strong>{{ product.category }}</strong> <br>
+                    Esta ação não pode ser desfeita.</p>
+            </div>
+          </div>
+
+          <form action="." method="post">
+            {% csrf_token %}
+            <div class="row my-5">
+              <div class="col-md-12" style="display: flex; justify-content: space-between;">
+                <a class="btn btn-secondary" href="{% url 'products_list' %}">Cancelar</a>
+                <input type="submit" value="Confirmar" class="btn btn-danger">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/html" id="variacao-produto">
+    <div id="item-__prefix__" style="margin-top: 10px" class="row form-row spacer">
+      <div class="input-group">
+        <div class="col-md-9">
+          <label>Variação</label><br> {{ formset.empty_form.variation }}</div>
+        <div class="col-md-2">
+          <label>Preço</label><br> {{ formset.empty_form.price }}</div>
+        <div class="col-md-1" style="margin-top: 38px;">{{ formset.empty_form.DELETE }}
+          <i class="fas fa-trash"></i></div>
+      </div>
+    </div>
+  </script>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
