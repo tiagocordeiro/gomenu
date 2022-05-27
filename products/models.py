@@ -51,5 +51,5 @@ class ProductVariation(TimeStampedModel, Active):
         )
 
     class Meta:
-        ordering = ("product", "variation", "price")
+        ordering = ("product", "price", "variation")
         unique_together = [("product", "variation")]
