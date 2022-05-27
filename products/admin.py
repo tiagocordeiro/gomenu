@@ -5,6 +5,23 @@ from django_summernote.admin import SummernoteModelAdmin
 from .models import Product, Category, ProductVariation
 
 
+class CategoryFilter(admin.SimpleListFilter):
+    title = 'categoria'
+    parameter_name = 'category'
+
+    def lookups(self, request, model_admin):
+        if 'restaurant__id__exact' in request.GET:
+            restaurant_id = request.GET['restaurant__id__exact']
+            categorias = set([c.category for c in model_admin.model.objects.all().filter(restaurant=restaurant_id)])
+        else:
+            categorias = set([c.category for c in model_admin.model.objects.all()])
+        return [(b.id, b.name) for b in categorias]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(category__id__exact=self.value())
+
+
 class ProductVariationInLine(admin.StackedInline):
     model = ProductVariation
     extra = 1
@@ -19,7 +36,7 @@ class CategoryAdmin(SummernoteModelAdmin):
 class ProductVariationAdmin(admin.ModelAdmin):
     search_fields = ["product"]
     list_display = ('product', 'variation', 'price')
-    list_filter = ('product__restaurant',)
+    list_filter = ('product__restaurant', 'product__category')
     list_editable = ['variation', 'price']
 
 
@@ -37,7 +54,7 @@ class ProductAdmin(OrderableAdmin, admin.ModelAdmin):
     list_display = ('name', 'price', 'product_type', 'order', 'category', 'restaurant')
     list_editable = ["order", "price"]
 
-    list_filter = ('category', 'restaurant')
+    list_filter = ('restaurant', CategoryFilter)
     inlines = [
         ProductVariationInLine,
     ]
