@@ -1,5 +1,4 @@
 from django.forms import ModelForm, TextInput, Textarea, NumberInput, Select
-from django_summernote.widgets import SummernoteWidget
 
 from .models import Product, Category, ProductVariation
 
@@ -14,7 +13,7 @@ class CategoryForm(ModelForm):
 
         widgets = {
             'name': TextInput(attrs={'class': 'form-control'}),
-            'description': SummernoteWidget(),
+            'description': Textarea(attrs={'class': 'form-control'}),
         }
 
 
