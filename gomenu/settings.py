@@ -51,8 +51,6 @@ INSTALLED_APPS = [
     "qr_code",
     # Admin ordering
     "admin_ordering",
-    # Code editor
-    "django_summernote",
 ]
 
 MIDDLEWARE = [
@@ -220,55 +218,6 @@ if CLOUDINARY_URL:  # pragma: no cover
 
         DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
         STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticCloudinaryStorage'
-
-SUMMERNOTE_CONFIG = {
-    # Using SummernoteWidget - iframe mode, default
-    'iframe': True,
-
-    # Or, you can set it to `False` to use SummernoteInplaceWidget by default - no iframe mode
-    # In this case, you have to load Bootstrap/jQuery sources and dependencies manually.
-    # Use this when you're already using Bootstrap/jQuery based themes.
-    # 'iframe': False,
-
-    # You can put custom Summernote settings
-    'summernote': {
-        # As an example, using Summernote Air-mode
-        'airMode': False,
-
-        # Change editor size
-        'width': '100%',
-        'height': '480',
-
-        # Toolbar customization
-        # https://summernote.org/deep-dive/#custom-toolbar-popover
-        'toolbar': [
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear']],
-            ['fontname', ['fontname']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture', 'video']],
-            ['view', ['fullscreen', 'codeview', 'help']],
-        ],
-
-        # Or, explicitly set language/locale for editor
-        'lang': 'pt-BR',
-
-        'codemirror': {
-            'mode': 'htmlmixed',
-            'lineNumbers': 'true',
-            # You have to include theme file in 'css' or 'css_for_inplace' before using it.
-            'theme': 'monokai',
-        },
-    },
-
-    # Codemirror as codeview
-    # If any codemirror settings are defined, it will include codemirror files automatically.
-    'css': (
-        '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.29.0/theme/monokai.min.css',
-    ),
-}
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
