@@ -22,7 +22,7 @@ django-s3-folder-storage==0.5
 dj3-cloudinary-storage==0.0.6
 
 # Sentry
-sentry-sdk==1.6.0
+sentry-sdk==1.7.1
 
 # Admin Order
 django-admin-ordering==0.15.0
