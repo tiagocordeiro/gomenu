@@ -1,7 +1,7 @@
 django-extensions==3.2.1
 ipython==8.5.0
 pytest-django==4.5.2
-coverage==6.5.0
+coverage==7.2.5
 flake8==5.0.4
 django-debug-toolbar==3.7.0
 
