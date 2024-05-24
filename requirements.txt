@@ -25,7 +25,7 @@ dj3-cloudinary-storage==0.0.6
 sentry-sdk==1.9.10
 
 # Admin Order
-django-admin-ordering==0.16.0
+django-admin-ordering==0.18.0
 
 # Code Editor
 django-summernote==0.8.20.0
